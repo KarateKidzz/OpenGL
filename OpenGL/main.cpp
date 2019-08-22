@@ -33,6 +33,11 @@ const float vertices[] = {
     -0.5f,  0.5f, 0.0f,     1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
 };
 
+const unsigned int indices[] = {
+    0, 1, 3, // first triangle
+    1, 2, 3  // second triangle
+};
+
 int main ()
 {
     // Init glfw
@@ -76,31 +81,27 @@ int main ()
     
     // VERTEX BUFFER
     
-    // create a vertex buffer object
-    GLuint vertexBufferID;
-    GLuint vertexArrayObject;
+    unsigned int VBO, VAO, EBO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
     
-    // create vertex buffer and vertex array
-    glGenBuffers(1, &vertexBufferID);
-    glGenVertexArrays(1, &vertexArrayObject);
+    glBindVertexArray(VAO);
     
-    // bind the vertex array
-    glBindVertexArray(vertexArrayObject);
-    
-    
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    
     // color attribute
-    glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), ( GLvoid * )( 3 * sizeof( GLfloat ) ) );
-    glEnableVertexAttribArray( 1 );
-    
-    // texture
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (GLvoid*)(6 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
     
     // TEXTURES
@@ -148,7 +149,7 @@ int main ()
         
         shader.Select();
         
-        glBindVertexArray(vertexArrayObject);
+        glBindVertexArray(VBO);
         //        glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
@@ -156,8 +157,9 @@ int main ()
         mainDisplay.Update();
     }
     
-    glDeleteVertexArrays( 1, &vertexArrayObject );
-    glDeleteBuffers( 1, &vertexBufferID );
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
     
     glfwTerminate();
     
