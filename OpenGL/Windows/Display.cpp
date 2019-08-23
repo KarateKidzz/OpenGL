@@ -87,4 +87,3 @@ void Display::Update()
     glfwSwapBuffers(window);
     glfwPollEvents();
 }
-

@@ -3,11 +3,11 @@
 #include <GLFW/glfw3.h>
 #include "Windows/Display.hpp"
 #include "Shaders/Shader.hpp"
+#include "Application/OpenGLLoader.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include <fstream>
 #include <string>
 
 /*
@@ -20,8 +20,6 @@
  */
 
 void processInput(GLFWwindow* window);                                      // handle input
-
-std::string readShader (const char* filePath);
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
@@ -40,34 +38,16 @@ const unsigned int indices[] = {
 
 int main ()
 {
-    // Init glfw
-    glfwInit();
+    OpenGLLoader openGLLoader(WIDTH, HEIGHT, "OpenGL");
     
-    // Create a Display (a wrapper around a GLFW Window)
-    Display mainDisplay (WIDTH, HEIGHT, "OpenGL");
-    
-    // Create the underlying window and abort if failed
-    if (!mainDisplay.Create())
+    if (!openGLLoader.LoadingSuccessful())
     {
-        std::cerr << "Failed to initialize main window" << std::endl;
-        glfwTerminate();
-        return EXIT_FAILURE;
-    }
-    
-    // Init glad (load OpenGL) using the glfw loader function
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
+        std::cerr << openGLLoader.GetErrorMessage() << std::endl;
         return EXIT_FAILURE;
     }
     
     glEnable(GL_MULTISAMPLE);
     
-    // Init the viewport to the inital screen size
-    // The Display class will handle setting this if the screen size changes
-    // The Display class can't set this itself at init because OpenGL / glad hasn't been initialised
-    glViewport(0, 0, WIDTH, HEIGHT);
     
     
     Shader shader("Resources/Shaders/shader.vert", "Resources/Shaders/shader.frag");
@@ -138,11 +118,11 @@ int main ()
     glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
     
     // Main loop
-    while(!mainDisplay.ShouldClose())
+    while(!openGLLoader.Display.ShouldClose())
     {
-        processInput(mainDisplay.GetWindow());
+        processInput(openGLLoader.Display.GetWindow());
         
-        mainDisplay.Clear();
+        openGLLoader.Display.Clear();
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -153,15 +133,13 @@ int main ()
         //        glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         
-        mainDisplay.Render();
-        mainDisplay.Update();
+        openGLLoader.Display.Render();
+        openGLLoader.Display.Update();
     }
     
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
-    
-    glfwTerminate();
     
     return EXIT_SUCCESS;
 }
