@@ -38,6 +38,7 @@ const unsigned int indices[] = {
 
 int main ()
 {
+    // OpenGL Loading
     OpenGLLoader openGLLoader(WIDTH, HEIGHT, "OpenGL");
     
     if (!openGLLoader.LoadingSuccessful())
@@ -46,10 +47,7 @@ int main ()
         return EXIT_FAILURE;
     }
     
-    glEnable(GL_MULTISAMPLE);
-    
-    
-    
+    // Shader
     Shader shader("Resources/Shaders/shader.vert", "Resources/Shaders/shader.frag");
     
     if (!shader.CompilationWasSuccessful())

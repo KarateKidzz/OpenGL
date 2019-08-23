@@ -42,6 +42,7 @@ Display(windowWidth, windowHeight, windowTitle)
         glfwTerminate();
         return;
     }
+    glEnable(GL_MULTISAMPLE);
     
     glViewport(0, 0, windowWidth, windowHeight);
     
