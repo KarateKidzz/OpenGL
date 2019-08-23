@@ -43,6 +43,7 @@ Display(windowWidth, windowHeight, windowTitle)
         return;
     }
     glEnable(GL_MULTISAMPLE);
+    glEnable(GL_DEPTH_TEST);
     
     glViewport(0, 0, windowWidth, windowHeight);
     
