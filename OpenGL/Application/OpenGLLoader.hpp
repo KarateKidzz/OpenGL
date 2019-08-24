@@ -25,7 +25,7 @@ public:
     
     bool LoadingSuccessful () const;
     
-    std::string GetErrorMessage () const;
+    const std::string& GetErrorMessage () const;
     
     Display Display;
     

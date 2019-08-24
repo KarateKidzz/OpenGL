@@ -24,12 +24,18 @@
  */
 
 void processInput(GLFWwindow* window);                                      // handle input
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 const GLint WIDTH = 800, HEIGHT = 600;
+float lastX = 400, lastY = 300;
+float pitch, yaw;
 
 glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 //const float vertices[] = {
 //    // positions            // colors           // texture coords
@@ -179,9 +185,15 @@ int main ()
     unsigned int projLoc  = glGetUniformLocation(shader.GetShaderID(), "projection");
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
+    glfwSetCursorPosCallback(openGLLoader.Display.GetWindow(), mouse_callback);
+    
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
     {
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        
         processInput(openGLLoader.Display.GetWindow());
         
         openGLLoader.Display.Clear();
@@ -239,20 +251,50 @@ void processInput (GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     
-    float cameraSpeed = 0.01f; // adjust accordingly
+    float cameraSpeed = 5.0f * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        {
             cameraPos += cameraSpeed * cameraFront;
-            std::cout << "W" << std::endl;
-        }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        {
-            std::cout << cameraPos.z << std::endl;
             cameraPos -= cameraSpeed * cameraFront;
-        }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
+}
+
+bool firstMouse = true;
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if(firstMouse)
+    {
+        std::cout << "First move" << std::endl;
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+    
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
+    lastX = xpos;
+    lastY = ypos;
+    
+    float sensitivity = 0.05f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+    
+    yaw   += xoffset;
+    pitch += yoffset;
+    
+    if(pitch > 89.0f)
+        pitch =  89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+    
+    glm::vec3 front;
+    front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+    front.y = sin(glm::radians(pitch));
+    front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+    cameraFront = glm::normalize(front);
 }

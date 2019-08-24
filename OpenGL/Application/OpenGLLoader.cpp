@@ -44,6 +44,7 @@ Display(windowWidth, windowHeight, windowTitle)
     }
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_DEPTH_TEST);
+    glfwSetInputMode(Display.GetWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED); 
     
     glViewport(0, 0, windowWidth, windowHeight);
     
@@ -59,7 +60,7 @@ bool OpenGLLoader::LoadingSuccessful() const
     return loadSuccessful;
 }
 
-std::string OpenGLLoader::GetErrorMessage() const
+const std::string& OpenGLLoader::GetErrorMessage() const
 {
     return errorMessage;
 }
