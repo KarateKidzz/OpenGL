@@ -9,13 +9,14 @@
 #ifndef OpenGLLoader_hpp
 #define OpenGLLoader_hpp
 
+#include "../Utils/NonCopyable.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
 #include "../Windows/Display.hpp"
 
 /// Handles static loading of glfw and glad. Loads the first window
-class OpenGLLoader
+class OpenGLLoader : NonCopyable
 {
 public:
     OpenGLLoader();

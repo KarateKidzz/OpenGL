@@ -1,6 +1,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Application/Application.hpp"
 #include "Windows/Display.hpp"
 #include "Shaders/Shader.hpp"
 #include "Application/OpenGLLoader.hpp"
@@ -203,9 +204,8 @@ int main ()
         processInput(openGLLoader.Display.GetWindow());
         
         input.Update();
+//        camera.WorldObject::Update(deltaTime);
         camera.Update(deltaTime);
-        
-        std::cout << Input::MouseXOffset() << std::endl;
         
         openGLLoader.Display.Clear();
         
@@ -218,10 +218,6 @@ int main ()
 //        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-        
-        // retrieve the matrix uniform locations
-        unsigned int modelLoc = glGetUniformLocation(shader.GetShaderID(), "model");
-        
         
         glBindVertexArray(VAO);
         for(unsigned int i = 0; i < 10; i++)

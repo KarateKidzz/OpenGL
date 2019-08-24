@@ -12,6 +12,7 @@
 		0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA423114661006A64A2 /* WorldObject.cpp */; };
 		0A2FCEA923114832006A64A2 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA723114832006A64A2 /* Application.cpp */; };
 		0A2FCEAC23114C33006A64A2 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEAA23114C33006A64A2 /* Input.cpp */; };
+		0A2FCEB32311D91C006A64A2 /* BasicCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEB12311D91C006A64A2 /* BasicCube.cpp */; };
 		0A94C438218116CA008BE6AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A94C437218116CA008BE6AA /* main.cpp */; };
 		0A94C44021811744008BE6AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A94C43F21811744008BE6AA /* OpenGL.framework */; };
 		0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6E282230F4412007CDC1C /* OpenGLLoader.cpp */; };
@@ -47,6 +48,9 @@
 		0A2FCEA823114832006A64A2 /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		0A2FCEAA23114C33006A64A2 /* Input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
 		0A2FCEAB23114C33006A64A2 /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
+		0A2FCEAF2311996B006A64A2 /* NonCopyable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NonCopyable.h; sourceTree = "<group>"; };
+		0A2FCEB12311D91C006A64A2 /* BasicCube.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BasicCube.cpp; sourceTree = "<group>"; };
+		0A2FCEB22311D91C006A64A2 /* BasicCube.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BasicCube.hpp; sourceTree = "<group>"; };
 		0A94C434218116CA008BE6AA /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A94C437218116CA008BE6AA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0A94C43F21811744008BE6AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -97,10 +101,28 @@
 		0A2FCEA32311464C006A64A2 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FCEB02311D90D006A64A2 /* Rendering */,
 				0A2FCEA423114661006A64A2 /* WorldObject.cpp */,
 				0A2FCEA523114661006A64A2 /* WorldObject.hpp */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		0A2FCEAD2311994E006A64A2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCEAF2311996B006A64A2 /* NonCopyable.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0A2FCEB02311D90D006A64A2 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCEB12311D91C006A64A2 /* BasicCube.cpp */,
+				0A2FCEB22311D91C006A64A2 /* BasicCube.hpp */,
+			);
+			path = Rendering;
 			sourceTree = "<group>";
 		};
 		0A94C42B218116CA008BE6AA = {
@@ -123,6 +145,7 @@
 		0A94C436218116CA008BE6AA /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FCEAD2311994E006A64A2 /* Utils */,
 				0A2FCEA32311464C006A64A2 /* Objects */,
 				0A2FCE9F231145A0006A64A2 /* Camera */,
 				0A2FCE9B231137D5006A64A2 /* Vectors */,
@@ -254,6 +277,7 @@
 				0A2FCEAC23114C33006A64A2 /* Input.cpp in Sources */,
 				0A94C438218116CA008BE6AA /* main.cpp in Sources */,
 				0AD4AB21230D597B00E3EE92 /* Shader.cpp in Sources */,
+				0A2FCEB32311D91C006A64A2 /* BasicCube.cpp in Sources */,
 				0AF4F48C230C6D3B000676BF /* glad.c in Sources */,
 				0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */,
 				0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */,
