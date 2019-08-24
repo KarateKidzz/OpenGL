@@ -21,15 +21,23 @@ public:
     Transform (glm::vec3 pos);
     Transform (glm::vec3 pos, glm::vec3 rot);
     
+    /// World space position
     glm::vec3 Position;
+    /// World space rotation in eulers
     glm::vec3 Rotation;
     
 private:
-    glm::vec3 up;
-    glm::vec3 front;
-    glm::vec3 right;
-    glm::vec3 worldUp;
+    // flag to check if the up, forward and right vectors need to be calculated after a rotation update
+    bool requireVectorUpdate;
     
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 worldUp;
+    glm::vec3 up;
+    glm::vec3 forward;
+    glm::vec3 right;
+    
+    /// Recalculate up, front, right vectors
     void UpdateVectors ();
 };
 

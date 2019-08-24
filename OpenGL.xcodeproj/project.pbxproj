@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0A2FCE9E231137FC006A64A2 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCE9C231137FC006A64A2 /* Transform.cpp */; };
+		0A2FCEA2231145AB006A64A2 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA0231145AB006A64A2 /* Camera.cpp */; };
+		0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA423114661006A64A2 /* WorldObject.cpp */; };
+		0A2FCEA923114832006A64A2 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA723114832006A64A2 /* Application.cpp */; };
+		0A2FCEAC23114C33006A64A2 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEAA23114C33006A64A2 /* Input.cpp */; };
 		0A94C438218116CA008BE6AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A94C437218116CA008BE6AA /* main.cpp */; };
 		0A94C44021811744008BE6AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A94C43F21811744008BE6AA /* OpenGL.framework */; };
 		0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6E282230F4412007CDC1C /* OpenGLLoader.cpp */; };
@@ -35,6 +39,14 @@
 /* Begin PBXFileReference section */
 		0A2FCE9C231137FC006A64A2 /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		0A2FCE9D231137FC006A64A2 /* Transform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transform.hpp; sourceTree = "<group>"; };
+		0A2FCEA0231145AB006A64A2 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		0A2FCEA1231145AB006A64A2 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		0A2FCEA423114661006A64A2 /* WorldObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WorldObject.cpp; sourceTree = "<group>"; };
+		0A2FCEA523114661006A64A2 /* WorldObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WorldObject.hpp; sourceTree = "<group>"; };
+		0A2FCEA723114832006A64A2 /* Application.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		0A2FCEA823114832006A64A2 /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
+		0A2FCEAA23114C33006A64A2 /* Input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		0A2FCEAB23114C33006A64A2 /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
 		0A94C434218116CA008BE6AA /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A94C437218116CA008BE6AA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0A94C43F21811744008BE6AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -73,6 +85,24 @@
 			path = Vectors;
 			sourceTree = "<group>";
 		};
+		0A2FCE9F231145A0006A64A2 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCEA0231145AB006A64A2 /* Camera.cpp */,
+				0A2FCEA1231145AB006A64A2 /* Camera.hpp */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		0A2FCEA32311464C006A64A2 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCEA423114661006A64A2 /* WorldObject.cpp */,
+				0A2FCEA523114661006A64A2 /* WorldObject.hpp */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		0A94C42B218116CA008BE6AA = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +123,8 @@
 		0A94C436218116CA008BE6AA /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FCEA32311464C006A64A2 /* Objects */,
+				0A2FCE9F231145A0006A64A2 /* Camera */,
 				0A2FCE9B231137D5006A64A2 /* Vectors */,
 				0AC6E281230F43F0007CDC1C /* Application */,
 				0AD4AB1E230D596E00E3EE92 /* Shaders */,
@@ -120,6 +152,10 @@
 			children = (
 				0AC6E282230F4412007CDC1C /* OpenGLLoader.cpp */,
 				0AC6E283230F4412007CDC1C /* OpenGLLoader.hpp */,
+				0A2FCEA723114832006A64A2 /* Application.cpp */,
+				0A2FCEA823114832006A64A2 /* Application.hpp */,
+				0A2FCEAA23114C33006A64A2 /* Input.cpp */,
+				0A2FCEAB23114C33006A64A2 /* Input.hpp */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -213,10 +249,14 @@
 			files = (
 				0A2FCE9E231137FC006A64A2 /* Transform.cpp in Sources */,
 				0AF4F48A230C595B000676BF /* Display.cpp in Sources */,
+				0A2FCEA923114832006A64A2 /* Application.cpp in Sources */,
+				0A2FCEA2231145AB006A64A2 /* Camera.cpp in Sources */,
+				0A2FCEAC23114C33006A64A2 /* Input.cpp in Sources */,
 				0A94C438218116CA008BE6AA /* main.cpp in Sources */,
 				0AD4AB21230D597B00E3EE92 /* Shader.cpp in Sources */,
 				0AF4F48C230C6D3B000676BF /* glad.c in Sources */,
 				0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */,
+				0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
