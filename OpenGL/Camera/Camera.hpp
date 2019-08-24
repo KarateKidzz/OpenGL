@@ -16,8 +16,20 @@
 class Camera : WorldObject
 {
 public:
-    glm::mat4 GetViewMatrix();
+    Camera(glm::vec3 pos, float movementSpeed, float mouseSensitivity);
+    glm::mat4 GetViewMatrix() const;
     void Update (const float& deltaTime) override;
+    
+private:
+    float movementSpeed;
+    float mouseSensitivity;
+    
+    glm::mat4 view;
+    glm::vec3 forward;
+    glm::vec3 up;
+    glm::vec3 right;
+    
+    void UpdateView ();
 };
 
 #endif /* Camera_hpp */
