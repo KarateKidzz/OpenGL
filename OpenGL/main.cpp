@@ -174,15 +174,10 @@ int main ()
     // either set it manually like so:
     glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
     
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-    
-//    glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    
+    glm::mat4 projection    = glm::mat4(1.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+    unsigned int projLoc  = glGetUniformLocation(shader.GetShaderID(), "projection");
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -196,23 +191,13 @@ int main ()
         
         shader.Select();
         
-        glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        glm::mat4 projection    = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-//        float radius = 10.0f;
-//        float camX = sin(glfwGetTime()) * radius;
-//        float camZ = cos(glfwGetTime()) * radius;
-//        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0,0.0));
-        projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+        unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+        
         // retrieve the matrix uniform locations
         unsigned int modelLoc = glGetUniformLocation(shader.GetShaderID(), "model");
-        unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
-        unsigned int projLoc  = glGetUniformLocation(shader.GetShaderID(), "projection");
-        // pass them to the shaders (3 different ways)
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        
         
         glBindVertexArray(VAO);
         for(unsigned int i = 0; i < 10; i++)
@@ -254,7 +239,7 @@ void processInput (GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     
-    float cameraSpeed = 100.0f; // adjust accordingly
+    float cameraSpeed = 0.01f; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
             cameraPos += cameraSpeed * cameraFront;
