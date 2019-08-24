@@ -27,6 +27,10 @@ void processInput(GLFWwindow* window);                                      // h
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
 //const float vertices[] = {
 //    // positions            // colors           // texture coords
 //    0.5f,  0.5f, 0.0f,      1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
@@ -170,6 +174,15 @@ int main ()
     // either set it manually like so:
     glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
     
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+    
+//    glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -184,11 +197,13 @@ int main ()
         shader.Select();
         
         glm::mat4 model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        glm::mat4 view          = glm::mat4(1.0f);
+        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glm::mat4 projection    = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-        view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+//        float radius = 10.0f;
+//        float camX = sin(glfwGetTime()) * radius;
+//        float camZ = cos(glfwGetTime()) * radius;
+//        view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0,0.0));
         projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
         // retrieve the matrix uniform locations
         unsigned int modelLoc = glGetUniformLocation(shader.GetShaderID(), "model");
@@ -198,14 +213,6 @@ int main ()
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-        
-//        glm::mat4 transform = glm::mat4(1.0f);
-//
-//        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-//        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-//        // get their uniform location and set matrix (using glm::value_ptr)
-//        unsigned int transformLoc = glGetUniformLocation(shader.GetShaderID(), "transform");
-//        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
         
         glBindVertexArray(VAO);
         for(unsigned int i = 0; i < 10; i++)
@@ -246,4 +253,21 @@ void processInput (GLFWwindow* window)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
         glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    
+    float cameraSpeed = 100.0f; // adjust accordingly
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
+            cameraPos += cameraSpeed * cameraFront;
+            std::cout << "W" << std::endl;
+        }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        {
+            std::cout << cameraPos.z << std::endl;
+            cameraPos -= cameraSpeed * cameraFront;
+        }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
 }
