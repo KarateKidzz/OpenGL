@@ -205,8 +205,6 @@ int main ()
         input.Update();
         camera.Update(deltaTime);
         
-        std::cout << Input::MouseXOffset() << std::endl;
-        
         openGLLoader.Display.Clear();
         
         glActiveTexture(GL_TEXTURE0);
@@ -218,9 +216,6 @@ int main ()
 //        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-        
-        // retrieve the matrix uniform locations
-        unsigned int modelLoc = glGetUniformLocation(shader.GetShaderID(), "model");
         
         
         glBindVertexArray(VAO);

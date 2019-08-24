@@ -78,8 +78,8 @@ void Input::MouseMoveCallback(GLFWwindow *window, double xPosition, double yPosi
         firstMouseMovement = false;
     }
     
-    float xoffset = xPosition - lastMouseX;
-    float yoffset = lastMouseY - yPosition; // reversed since y-coordinates go from bottom to top
+//    float xoffset = xPosition - lastMouseX;
+//    float yoffset = lastMouseY - yPosition; // reversed since y-coordinates go from bottom to top
     
 //    lastMouseX = xPosition;
 //    lastMouseY = yPosition;
