@@ -16,6 +16,7 @@ class Input
 {
 public:
     Input(GLFWwindow* window);
+    static void Update ();
     static float MouseXOffset();
     static float MouseYOffset();
     static float ScrollXOffset();

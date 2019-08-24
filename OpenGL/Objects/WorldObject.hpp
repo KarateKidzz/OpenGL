@@ -27,7 +27,7 @@ public:
     WorldObject(glm::vec3 pos, glm::vec3 rot);
     Transform Transform;
     
-protected:
+//protected:
     virtual void Start() {}
     virtual void Update(const float& deltaTime) {}
 };

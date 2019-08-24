@@ -14,13 +14,13 @@ void Camera::Update(const float& deltaTime)
     float velocity = movementSpeed * deltaTime;
     
     if (Input::GetKeyDown(GLFW_KEY_W))
-        Transform.Position.x += Transform.Position.x * velocity;
+        Transform.Position += forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_S))
-        Transform.Position.x -= Transform.Position.x * velocity;
+        Transform.Position -= forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_A))
-        Transform.Position.z += Transform.Position.z * velocity;
+        Transform.Position -= right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_D))
-        Transform.Position.z += Transform.Position.z * velocity;
+        Transform.Position += right * velocity;
     
     // process mouse movement
     float mouseX = Input::MouseXOffset() * mouseSensitivity;
@@ -35,18 +35,25 @@ void Camera::Update(const float& deltaTime)
         Transform.Rotation.x = -89.0f;
     
     // recalculate vectors
-    glm::vec3 forwardLocal;
-    forwardLocal.x = cos(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
-    forwardLocal.y = sin(glm::radians(Transform.Rotation.y));
-    forwardLocal.z = cos(glm::radians(Transform.Rotation.y)) * sin(glm::radians(Transform.Rotation.x));
-    forward = glm::normalize(forwardLocal);
-    right = glm::normalize(glm::cross(forward, Transform::WorldUp));
-    up = glm::normalize(glm::cross(right, forward));
+    CalculateVectors();
+    
+    UpdateView();
 }
 
 void Camera::UpdateView()
 {
     view = glm::lookAt(Transform.Position, Transform.Position + forward, up);
+}
+
+void Camera::CalculateVectors()
+{
+    glm::vec3 forwardLocal;
+    forwardLocal.x = cos(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
+    forwardLocal.y = sin(glm::radians(Transform.Rotation.x));
+    forwardLocal.z = sin(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
+    forward = glm::normalize(forwardLocal);
+    right = glm::normalize(glm::cross(forward, Transform::WorldUp));
+    up = glm::normalize(glm::cross(right, forward));
 }
 
 glm::mat4 Camera::GetViewMatrix() const
@@ -55,6 +62,6 @@ glm::mat4 Camera::GetViewMatrix() const
 }
 
 Camera::Camera(glm::vec3 pos, float movementSpeed, float mouseSensitivity) : WorldObject(pos), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
-    
+    CalculateVectors();
 }
 

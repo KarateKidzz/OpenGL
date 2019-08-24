@@ -24,8 +24,29 @@ Input::Input( GLFWwindow* window)
         Input::window = window;
     }
     
-    glfwSetCursorPosCallback(window, MouseMoveCallback);
+//    glfwSetCursorPosCallback(window, MouseMoveCallback);
     glfwSetScrollCallback(window, ScrollMoveCallback);
+}
+
+void Input::Update()
+{
+    
+    
+    double currentMouseX, currentMouseY;
+    glfwGetCursorPos(window, &currentMouseX, &currentMouseY);
+    
+    if (firstMouseMovement)
+    {
+        lastMouseX = currentMouseX;
+        lastMouseY = currentMouseY;
+        firstMouseMovement = false;
+    }
+    
+    mouseXOffset = currentMouseX - lastMouseX;
+    mouseYOffset = lastMouseY - currentMouseY;
+    
+    lastMouseX = currentMouseX;
+    lastMouseY = currentMouseY;
 }
 
 float Input::MouseXOffset() { 
@@ -56,6 +77,15 @@ void Input::MouseMoveCallback(GLFWwindow *window, double xPosition, double yPosi
         lastMouseY = yPosition;
         firstMouseMovement = false;
     }
+    
+    float xoffset = xPosition - lastMouseX;
+    float yoffset = lastMouseY - yPosition; // reversed since y-coordinates go from bottom to top
+    
+//    lastMouseX = xPosition;
+//    lastMouseY = yPosition;
+//    
+//    mouseXOffset = xoffset;
+//    mouseYOffset = yoffset;
 }
 
 void Input::ScrollMoveCallback(GLFWwindow *window, double xOffset, double yOffset) { 

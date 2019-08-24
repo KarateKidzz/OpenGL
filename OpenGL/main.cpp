@@ -4,6 +4,8 @@
 #include "Windows/Display.hpp"
 #include "Shaders/Shader.hpp"
 #include "Application/OpenGLLoader.hpp"
+#include "Application/Input.hpp"
+#include "Camera/Camera.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -185,7 +187,11 @@ int main ()
     unsigned int projLoc  = glGetUniformLocation(shader.GetShaderID(), "projection");
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
-    glfwSetCursorPosCallback(openGLLoader.Display.GetWindow(), mouse_callback);
+//    glfwSetCursorPosCallback(openGLLoader.Display.GetWindow(), mouse_callback);
+    
+    Input input(openGLLoader.Display.GetWindow());
+    Camera camera (glm::vec3(0.0f, 0.0f, 3.0f), 10, 0.1f);
+    
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -196,6 +202,11 @@ int main ()
         
         processInput(openGLLoader.Display.GetWindow());
         
+        input.Update();
+        camera.Update(deltaTime);
+        
+        std::cout << Input::MouseXOffset() << std::endl;
+        
         openGLLoader.Display.Clear();
         
         glActiveTexture(GL_TEXTURE0);
@@ -203,7 +214,8 @@ int main ()
         
         shader.Select();
         
-        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        glm::mat4 view          = camera.GetViewMatrix();
+//        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
         

@@ -13,7 +13,7 @@
 #include "../Application/Input.hpp"
 
 /// Represents a position and rotation that can be moved by the user and return a View Matrix
-class Camera : WorldObject
+class Camera : public WorldObject
 {
 public:
     Camera(glm::vec3 pos, float movementSpeed, float mouseSensitivity);
@@ -30,6 +30,7 @@ private:
     glm::vec3 right;
     
     void UpdateView ();
+    void CalculateVectors ();
 };
 
 #endif /* Camera_hpp */
