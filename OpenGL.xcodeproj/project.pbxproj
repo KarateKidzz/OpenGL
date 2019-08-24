@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A2FCE9E231137FC006A64A2 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCE9C231137FC006A64A2 /* Transform.cpp */; };
 		0A94C438218116CA008BE6AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A94C437218116CA008BE6AA /* main.cpp */; };
 		0A94C44021811744008BE6AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A94C43F21811744008BE6AA /* OpenGL.framework */; };
 		0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6E282230F4412007CDC1C /* OpenGLLoader.cpp */; };
@@ -32,6 +33,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A2FCE9C231137FC006A64A2 /* Transform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
+		0A2FCE9D231137FC006A64A2 /* Transform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transform.hpp; sourceTree = "<group>"; };
 		0A94C434218116CA008BE6AA /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A94C437218116CA008BE6AA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0A94C43F21811744008BE6AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -61,6 +64,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A2FCE9B231137D5006A64A2 /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCE9C231137FC006A64A2 /* Transform.cpp */,
+				0A2FCE9D231137FC006A64A2 /* Transform.hpp */,
+			);
+			path = Vectors;
+			sourceTree = "<group>";
+		};
 		0A94C42B218116CA008BE6AA = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +93,7 @@
 		0A94C436218116CA008BE6AA /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FCE9B231137D5006A64A2 /* Vectors */,
 				0AC6E281230F43F0007CDC1C /* Application */,
 				0AD4AB1E230D596E00E3EE92 /* Shaders */,
 				0AF4F49F230CA190000676BF /* Resources */,
@@ -198,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A2FCE9E231137FC006A64A2 /* Transform.cpp in Sources */,
 				0AF4F48A230C595B000676BF /* Display.cpp in Sources */,
 				0A94C438218116CA008BE6AA /* main.cpp in Sources */,
 				0AD4AB21230D597B00E3EE92 /* Shader.cpp in Sources */,
