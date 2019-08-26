@@ -6,6 +6,7 @@
 #include "Application/OpenGLLoader.hpp"
 #include "Application/Input.hpp"
 #include "Camera/Camera.hpp"
+#include "Rendering/Mesh.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -104,6 +105,33 @@ const glm::vec3 cubePositions[] = {
     glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+const glm::vec3 cube [] =
+{
+    glm::vec3(-1, -1, -1),
+   glm::vec3(1, -1, -1),
+   glm::vec3(1, 1, -1),
+   glm::vec3(-1, 1, -1),
+   glm::vec3(-1, -1, 1),
+   glm::vec3(1, -1, 1),
+   glm::vec3(1, 1, 1),
+   glm::vec3(-1, 1, 1)
+};
+
+const unsigned int indices [] =
+{
+    0, 1, 3, 3, 1, 2,
+    1, 5, 2, 2, 5, 6,
+    5, 4, 6, 6, 4, 7,
+    4, 0, 7, 7, 0, 3,
+    3, 2, 7, 7, 2, 6,
+    4, 5, 0, 0, 5, 1
+};
+
+const Texture texs [] =
+{
+    Texture(0, "")
+};
+
 int main ()
 {
     // OpenGL Loading
@@ -194,6 +222,17 @@ int main ()
     Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
+    WorldObject cubeObject(glm::vec3(5, 0, 5));
+    std::vector<Vertex> v;
+    for (int i = 0; i < 8; i++)
+    {
+        v.push_back(cube[i]);
+    }
+    std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
+    std::vector<Texture>t(texs, texs + sizeof texs / sizeof indices[0]);
+    Mesh mesh(v,i,t);
+    cubeObject.AttachComponent(&mesh);
+    
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -209,34 +248,17 @@ int main ()
         
         openGLLoader.Display.Clear();
         
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        
         shader.Select();
         
-        glm::mat4 view          = camera.GetViewMatrix();
-//        glm::mat4 view          = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cubePositions[0]);
+        glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
+
+
+        
+        mesh.Draw(shader, texture);
         
         
-        glBindVertexArray(VAO);
-        for(unsigned int i = 0; i < 10; i++)
-        {
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
-            if (i % 3 == 0 || i == 0)
-                model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-            float angle = 20.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
-//            ourShader.setMat4("model", model);
-            
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
-        
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

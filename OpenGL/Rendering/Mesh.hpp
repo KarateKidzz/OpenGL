@@ -14,18 +14,30 @@
 #include <string>
 #include <vector>
 #include "../Objects/Component.hpp"
+#include "../Shaders/Shader.hpp"
 
 struct Vertex
 {
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec3 TexCoord;
+    
+    inline Vertex(glm::vec3 pos)
+    {
+        Position = pos;
+    }
 };
 
 struct Texture
 {
     unsigned int id;
     std::string type;
+    
+    inline Texture(unsigned int id, std::string type)
+    {
+        this->id = id;
+        this->type = type;
+    }
 };
 
 class Mesh : public Component
@@ -36,6 +48,8 @@ public:
     std::vector<Vertex> Verticies;
     std::vector<unsigned int> Indices;
     std::vector<Texture> Textures;
+    
+    void Draw (const Shader& shader, const int tex);
     
 private:
     unsigned int VAO, VBO, EBO;
