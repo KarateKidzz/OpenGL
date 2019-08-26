@@ -9,13 +9,11 @@
 #include "Component.hpp"
 #include "WorldObject.hpp"
 
-Component::Component() {
-    Awake();
+Component::Component() : Transform(nullptr){
 }
 
-Component::Component(WorldObject *worldObject) {
+Component::Component(WorldObject *worldObject) : Component::Component() {
     worldObject->AttachComponent(this);
-    Awake();
 }
 
 WorldObject &Component::GetWorldObject() const
@@ -26,5 +24,7 @@ WorldObject &Component::GetWorldObject() const
 void Component::AssignWorldObject (WorldObject* worldObject)
 {
     this->worldObject = worldObject;
-    Start();
+    Transform = &worldObject->Transform;
+    Awake();
+//    Start();
 }

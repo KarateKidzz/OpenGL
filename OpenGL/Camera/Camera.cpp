@@ -13,32 +13,30 @@ void Camera::Update(const float& deltaTime)
     // process keyboard input
     float velocity = movementSpeed * deltaTime;
     
-    Transform& Transform = GetWorldObject().Transform;
-    
     if (Input::GetKeyDown(GLFW_KEY_W))
-        Transform.Position += forward * velocity;
+        Transform->Position += forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_S))
-        Transform.Position -= forward * velocity;
+        Transform->Position -= forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_A))
-        Transform.Position -= right * velocity;
+        Transform->Position -= right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_D))
-        Transform.Position += right * velocity;
+        Transform->Position += right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_E))
-        Transform.Position += up * velocity;
+        Transform->Position += up * velocity;
     if (Input::GetKeyDown(GLFW_KEY_Q))
-        Transform.Position -= up * velocity;
+        Transform->Position -= up * velocity;
     
     // process mouse movement
     float mouseX = Input::MouseXOffset() * mouseSensitivity;
     float mouseY = Input::MouseYOffset() * mouseSensitivity;
     
-    Transform.Rotation.y += mouseX;
-    Transform.Rotation.x += mouseY;
+    Transform->Rotation.y += mouseX;
+    Transform->Rotation.x += mouseY;
     
-    if (Transform.Rotation.x > 89.0f)
-        Transform.Rotation.x = 89.0f;
-    if (Transform.Rotation.x < -89.0f)
-        Transform.Rotation.x = -89.0f;
+    if (Transform->Rotation.x > 89.0f)
+        Transform->Rotation.x = 89.0f;
+    if (Transform->Rotation.x < -89.0f)
+        Transform->Rotation.x = -89.0f;
     
     // recalculate vectors
     CalculateVectors();
@@ -53,11 +51,10 @@ void Camera::UpdateView()
 
 void Camera::CalculateVectors()
 {
-    Transform& Transform = GetWorldObject().Transform;
     glm::vec3 forwardLocal;
-    forwardLocal.x = cos(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
-    forwardLocal.y = sin(glm::radians(Transform.Rotation.x));
-    forwardLocal.z = sin(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
+    forwardLocal.x = cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
+    forwardLocal.z = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
     forward = glm::normalize(forwardLocal);
     right = glm::normalize(glm::cross(forward, Transform::WorldUp));
     up = glm::normalize(glm::cross(right, forward));

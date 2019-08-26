@@ -9,6 +9,8 @@
 #ifndef Component_hpp
 #define Component_hpp
 
+#include "../Vectors/Transform.hpp"
+
 class WorldObject;
 
 /// A class that can be attached to a WorldObject to provide functionality
@@ -20,6 +22,7 @@ public:
     Component();
     Component(WorldObject* worldObject);
     WorldObject& GetWorldObject () const;
+    Transform* Transform;
     
 protected:
     virtual void Awake() {}
