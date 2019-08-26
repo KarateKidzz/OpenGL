@@ -13,7 +13,11 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+#include <memory>
 #include "../Vectors/Transform.hpp"
+
+class Component;
 
 /// Represents a class that can be inherited from to give a world position and rotation. Should act as the base class for all objects in the scene
 class WorldObject
@@ -26,6 +30,11 @@ public:
     
     virtual void Start() {}
     virtual void Update(const float& deltaTime) {}
+    
+    void AttachComponent (Component* component);
+    
+private:
+    std::vector<std::unique_ptr<Component*>> Components;
 };
 
 #endif /* WorldObject_hpp */
