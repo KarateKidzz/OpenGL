@@ -21,6 +21,10 @@ void Camera::Update(const float& deltaTime)
         Transform.Position -= right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_D))
         Transform.Position += right * velocity;
+    if (Input::GetKeyDown(GLFW_KEY_E))
+        Transform.Position += up * velocity;
+    if (Input::GetKeyDown(GLFW_KEY_Q))
+        Transform.Position -= up * velocity;
     
     // process mouse movement
     float mouseX = Input::MouseXOffset() * mouseSensitivity;
