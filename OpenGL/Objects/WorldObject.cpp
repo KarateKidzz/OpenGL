@@ -21,11 +21,19 @@ WorldObject::WorldObject(glm::vec3 pos) : WorldObject::WorldObject(pos, glm::vec
 
 WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot) : Transform(pos, rot)
 {
-    Start();
-    Component c;
-    c.Update();
 }
 
+void WorldObject::Update(const float &deltaTime)
+{
+    for (const std::unique_ptr<Component*>& c : Components)
+    {
+        if (*c != nullptr)
+        {
+            Component* component = *c;
+            component->Update(deltaTime);
+        }
+    }
+}
 
 
 void WorldObject::AttachComponent(Component *component) {

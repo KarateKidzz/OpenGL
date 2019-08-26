@@ -190,7 +190,9 @@ int main ()
 //    glfwSetCursorPosCallback(openGLLoader.Display.GetWindow(), mouse_callback);
     
     Input input(openGLLoader.Display.GetWindow());
-    Camera camera (glm::vec3(0.0f, 0.0f, 3.0f), 10, 0.1f);
+    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 3.0f));
+    Camera camera (10, 0.1f);
+    cameraObject.AttachComponent(&camera);
     
     
     // Main loop
@@ -203,7 +205,7 @@ int main ()
         processInput(openGLLoader.Display.GetWindow());
         
         input.Update();
-        camera.Update(deltaTime);
+        cameraObject.Update(deltaTime);
         
         openGLLoader.Display.Clear();
         

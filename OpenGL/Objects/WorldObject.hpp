@@ -23,13 +23,13 @@ class Component;
 class WorldObject
 {
 public:
+    int test =0;
     WorldObject();
     WorldObject(glm::vec3 pos);
     WorldObject(glm::vec3 pos, glm::vec3 rot);
     Transform Transform;
     
-    virtual void Start() {}
-    virtual void Update(const float& deltaTime) {}
+    virtual void Update(const float& deltaTime);
     
     void AttachComponent (Component* component);
     

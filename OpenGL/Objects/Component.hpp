@@ -24,7 +24,7 @@ public:
 protected:
     virtual void Awake() {}
     virtual void Start() {}
-    virtual void Update() {}
+    virtual void Update(const float& deltaTime) {}
     
     // owning object of this component
     class WorldObject* worldObject;

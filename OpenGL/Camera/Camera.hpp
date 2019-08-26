@@ -9,15 +9,19 @@
 #ifndef Camera_hpp
 #define Camera_hpp
 
+#include <glm/glm.hpp>
+#include "../Vectors/Transform.hpp"
 #include "../Objects/WorldObject.hpp"
+#include "../Objects/Component.hpp"
 #include "../Application/Input.hpp"
 
 /// Represents a position and rotation that can be moved by the user and return a View Matrix
-class Camera : public WorldObject
+class Camera : public Component
 {
 public:
-    Camera(glm::vec3 pos, float movementSpeed, float mouseSensitivity);
+    Camera(float movementSpeed, float mouseSensitivity);
     glm::mat4 GetViewMatrix() const;
+    void Awake() override;
     void Update (const float& deltaTime) override;
     
 private:

@@ -13,6 +13,8 @@ void Camera::Update(const float& deltaTime)
     // process keyboard input
     float velocity = movementSpeed * deltaTime;
     
+    Transform& Transform = GetWorldObject().Transform;
+    
     if (Input::GetKeyDown(GLFW_KEY_W))
         Transform.Position += forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_S))
@@ -46,11 +48,12 @@ void Camera::Update(const float& deltaTime)
 
 void Camera::UpdateView()
 {
-    view = glm::lookAt(Transform.Position, Transform.Position + forward, up);
+    view = glm::lookAt(GetWorldObject().Transform.Position, GetWorldObject().Transform.Position + forward, up);
 }
 
 void Camera::CalculateVectors()
 {
+    Transform& Transform = GetWorldObject().Transform;
     glm::vec3 forwardLocal;
     forwardLocal.x = cos(glm::radians(Transform.Rotation.y)) * cos(glm::radians(Transform.Rotation.x));
     forwardLocal.y = sin(glm::radians(Transform.Rotation.x));
@@ -65,7 +68,12 @@ glm::mat4 Camera::GetViewMatrix() const
     return view;
 }
 
-Camera::Camera(glm::vec3 pos, float movementSpeed, float mouseSensitivity) : WorldObject(pos), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
+Camera::Camera(float movementSpeed, float mouseSensitivity) : Component::Component(), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
+
+}
+
+void Camera::Awake()
+{
     CalculateVectors();
 }
 
