@@ -12,6 +12,8 @@
 		0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA423114661006A64A2 /* WorldObject.cpp */; };
 		0A2FCEA923114832006A64A2 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEA723114832006A64A2 /* Application.cpp */; };
 		0A2FCEAC23114C33006A64A2 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEAA23114C33006A64A2 /* Input.cpp */; };
+		0A2FCEB72311F1D6006A64A2 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FCEB52311F1D6006A64A2 /* Mesh.cpp */; };
+		0A5D513123145D3B006AD3F6 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A5D512F23145D3B006AD3F6 /* Component.cpp */; };
 		0A94C438218116CA008BE6AA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A94C437218116CA008BE6AA /* main.cpp */; };
 		0A94C44021811744008BE6AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A94C43F21811744008BE6AA /* OpenGL.framework */; };
 		0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6E282230F4412007CDC1C /* OpenGLLoader.cpp */; };
@@ -47,6 +49,10 @@
 		0A2FCEA823114832006A64A2 /* Application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Application.hpp; sourceTree = "<group>"; };
 		0A2FCEAA23114C33006A64A2 /* Input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
 		0A2FCEAB23114C33006A64A2 /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
+		0A2FCEB52311F1D6006A64A2 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		0A2FCEB62311F1D6006A64A2 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		0A5D512F23145D3B006AD3F6 /* Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Component.cpp; sourceTree = "<group>"; };
+		0A5D513023145D3B006AD3F6 /* Component.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Component.hpp; sourceTree = "<group>"; };
 		0A94C434218116CA008BE6AA /* OpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A94C437218116CA008BE6AA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		0A94C43F21811744008BE6AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -99,8 +105,19 @@
 			children = (
 				0A2FCEA423114661006A64A2 /* WorldObject.cpp */,
 				0A2FCEA523114661006A64A2 /* WorldObject.hpp */,
+				0A5D512F23145D3B006AD3F6 /* Component.cpp */,
+				0A5D513023145D3B006AD3F6 /* Component.hpp */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		0A2FCEB42311F1A6006A64A2 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				0A2FCEB52311F1D6006A64A2 /* Mesh.cpp */,
+				0A2FCEB62311F1D6006A64A2 /* Mesh.hpp */,
+			);
+			path = Rendering;
 			sourceTree = "<group>";
 		};
 		0A94C42B218116CA008BE6AA = {
@@ -123,6 +140,7 @@
 		0A94C436218116CA008BE6AA /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				0A2FCEB42311F1A6006A64A2 /* Rendering */,
 				0A2FCEA32311464C006A64A2 /* Objects */,
 				0A2FCE9F231145A0006A64A2 /* Camera */,
 				0A2FCE9B231137D5006A64A2 /* Vectors */,
@@ -248,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A2FCE9E231137FC006A64A2 /* Transform.cpp in Sources */,
+				0A5D513123145D3B006AD3F6 /* Component.cpp in Sources */,
 				0AF4F48A230C595B000676BF /* Display.cpp in Sources */,
 				0A2FCEA923114832006A64A2 /* Application.cpp in Sources */,
 				0A2FCEA2231145AB006A64A2 /* Camera.cpp in Sources */,
@@ -257,6 +276,7 @@
 				0AF4F48C230C6D3B000676BF /* glad.c in Sources */,
 				0AC6E284230F4412007CDC1C /* OpenGLLoader.cpp in Sources */,
 				0A2FCEA623114661006A64A2 /* WorldObject.cpp in Sources */,
+				0A2FCEB72311F1D6006A64A2 /* Mesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
