@@ -24,6 +24,8 @@ public:
     
     static bool GetKeyDown (int key);
     
+    static void Quit ();
+    
 private:
     static GLFWwindow* window;
     

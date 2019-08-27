@@ -7,8 +7,8 @@
 #include "Application/Input.hpp"
 #include "Camera/Camera.hpp"
 #include "Rendering/Mesh.hpp"
-
 #include "Textures/Texture.hpp"
+#include "Components/DebugInput.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -24,8 +24,6 @@
  glfw3.h is an API for creating windows and handling user input.
  
  */
-
-void processInput(GLFWwindow* window);                                      // handle input
 
 const GLint WIDTH = 800, HEIGHT = 600;
 
@@ -146,6 +144,9 @@ int main ()
     Mesh secondMesh(v,i);
     secondCubeObject.AttachComponent(&secondMesh);
     
+    DebugInput db;
+    cameraObject.AttachComponent(&db);
+    
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
     {
@@ -153,14 +154,15 @@ int main ()
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         
-        processInput(openGLLoader.Display.GetWindow());
-        
-        input.Update();
-        cameraObject.Update(deltaTime);
-        
         openGLLoader.Display.Clear();
+        input.Update();
         
         shader.Select();
+        cameraObject.Update(deltaTime);
+        
+        
+        
+        
         
         glm::mat4 view = glm::mat4(1.0f);
         view          = camera.GetViewMatrix();
@@ -175,17 +177,4 @@ int main ()
     }
     
     return EXIT_SUCCESS;
-}
-
-/// Processes User Input
-void processInput (GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 }

@@ -93,3 +93,8 @@ void Input::ScrollMoveCallback(GLFWwindow *window, double xOffset, double yOffse
     scrollYOffset = yOffset;
 }
 
+void Input::Quit() {
+    glfwSetWindowShouldClose(Input::window, GL_TRUE);
+}
+
+
