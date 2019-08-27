@@ -21,11 +21,6 @@ struct Vertex
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec3 TexCoord;
-    
-    inline Vertex(glm::vec3 pos)
-    {
-        Position = pos;
-    }
 };
 
 struct Texture
@@ -43,11 +38,11 @@ struct Texture
 class Mesh : public Component
 {
 public:
-    Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies, std::vector<Texture>& textures);
+    Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies);
+    ~Mesh();
     
     std::vector<Vertex> Verticies;
     std::vector<unsigned int> Indices;
-    std::vector<Texture> Textures;
     
     void Draw (const Shader& shader, const int tex);
     

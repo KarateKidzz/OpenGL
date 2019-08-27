@@ -9,12 +9,18 @@
 #include "Mesh.hpp"
 
 
-Mesh::Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies, std::vector<Texture> &textures) :
+Mesh::Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies) :
 Verticies(verticies),
-Indices(indicies),
-Textures(textures)
+Indices(indicies)
 {
     SetupMesh();
+}
+
+Mesh::~Mesh()
+{
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 }
 
 void Mesh::SetupMesh() {
@@ -63,6 +69,8 @@ void Mesh::SetupMesh() {
     // Vertex texture coordinates
     glEnableVertexAttribArray(2);
     glad_glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
+    
+    glBindVertexArray(0);
 }
 
 void Mesh::Draw(const Shader &shader, const int tex)
@@ -70,7 +78,7 @@ void Mesh::Draw(const Shader &shader, const int tex)
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, tex);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, static_cast<int>(Indices.size()) , GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);
 }
