@@ -7,6 +7,7 @@
 //
 
 #include "Camera.hpp"
+#include "../Shaders/Shader.hpp"
 
 void Camera::Update(const float& deltaTime)
 {
@@ -42,6 +43,9 @@ void Camera::Update(const float& deltaTime)
     CalculateVectors();
     
     UpdateView();
+    
+    unsigned int viewLoc  = glGetUniformLocation(shader->GetShaderID(), "view");
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 }
 
 void Camera::UpdateView()
@@ -74,7 +78,7 @@ glm::mat4 Camera::GetViewMatrix() const
     return view;
 }
 
-Camera::Camera(float movementSpeed, float mouseSensitivity) : Component::Component(), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
+Camera::Camera(Shader* shader, float movementSpeed, float mouseSensitivity) : Component::Component(), shader(shader), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
 
 }
 

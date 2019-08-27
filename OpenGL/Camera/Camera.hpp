@@ -15,16 +15,20 @@
 #include "../Objects/Component.hpp"
 #include "../Application/Input.hpp"
 
+class Shader;
+
 /// Represents a position and rotation that can be moved by the user and return a View Matrix
 class Camera : public Component
 {
 public:
-    Camera(float movementSpeed, float mouseSensitivity);
+    Camera(Shader* shader, float movementSpeed, float mouseSensitivity);
     glm::mat4 GetViewMatrix() const;
     void Awake() override;
     void Update (const float& deltaTime) override;
     
 private:
+    Shader* shader;
+    
     float movementSpeed;
     float mouseSensitivity;
     

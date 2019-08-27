@@ -129,8 +129,9 @@ int main ()
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
     Input input(openGLLoader.Display.GetWindow());
+    
     WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 0.f));
-    Camera camera (10, 0.1f);
+    Camera camera (&shader, 10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
     WorldObject cubeObject(glm::vec3(0, 0, 10));
@@ -159,15 +160,6 @@ int main ()
         
         shader.Select();
         cameraObject.Update(deltaTime);
-        
-        
-        
-        
-        
-        glm::mat4 view = glm::mat4(1.0f);
-        view          = camera.GetViewMatrix();
-        unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 
         mesh.Draw(shader, texture.GetID());
         secondMesh.Draw(shader, texture.GetID());
