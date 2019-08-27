@@ -131,11 +131,11 @@ int main ()
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
     Input input(openGLLoader.Display.GetWindow());
-    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 3.0f));
+    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, -10.0f));
     Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
-    WorldObject cubeObject(glm::vec3(0, 0, 10));
+    WorldObject cubeObject(glm::vec3(0, 0, 0));
     std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
 
     std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
