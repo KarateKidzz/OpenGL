@@ -8,6 +8,8 @@
 
 #include "Camera.hpp"
 #include "../Shaders/Shader.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include "../Windows/Display.hpp"
 
 void Camera::Update(const float& deltaTime)
 {
@@ -79,7 +81,12 @@ glm::mat4 Camera::GetViewMatrix() const
 }
 
 Camera::Camera(Shader* shader, float movementSpeed, float mouseSensitivity) : Component::Component(), shader(shader), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
-
+    int w,h;
+    Display::GetScreenSize(w, h);
+    glm::mat4 projection    = glm::mat4(1.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)w / (float)h, 0.1f, 100.0f);
+    unsigned int projLoc  = glGetUniformLocation(shader->GetShaderID(), "projection");
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Camera::Awake()

@@ -9,6 +9,8 @@
 #include "Display.hpp"
 #include <GLFW/glfw3.h>
 
+GLFWwindow* Display::staticWindow = nullptr;
+
 Display::Display(const int width, const int height, const char *title) :
     width(width),
     height(height),
@@ -55,6 +57,7 @@ bool Display::Create() {
     
     glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
     
+    staticWindow = window;
     
     return true;
 }
@@ -87,4 +90,23 @@ void Display::Update()
 {
     glfwSwapBuffers(window);
     glfwPollEvents();
+}
+
+int Display::GetWidth()
+{
+    int w;
+    glfwGetWindowSize(Display::staticWindow, &w, nullptr);
+    return w;
+}
+
+int Display::GetHeight()
+{
+    int h;
+    glfwGetWindowSize(Display::staticWindow, nullptr, &h);
+    return h;
+}
+
+void Display::GetScreenSize(int &width, int &height)
+{
+    glfwGetWindowSize(Display::staticWindow, &width, &height);
 }

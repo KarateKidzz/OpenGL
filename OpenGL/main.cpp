@@ -122,11 +122,7 @@ int main ()
     shader.Select(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
     glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
-    
-    glm::mat4 projection    = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-    unsigned int projLoc  = glGetUniformLocation(shader.GetShaderID(), "projection");
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
     
     Input input(openGLLoader.Display.GetWindow());
     
@@ -151,14 +147,17 @@ int main ()
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
     {
+        // calculate delta time
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         
         openGLLoader.Display.Clear();
+        
         input.Update();
         
         shader.Select();
+        
         cameraObject.Update(deltaTime);
 
         mesh.Draw(shader, texture.GetID());

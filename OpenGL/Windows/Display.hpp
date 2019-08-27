@@ -39,10 +39,17 @@ public:
     /// Returns the underlying OpenGL Window
     GLFWwindow* GetWindow () const;
     
+    static GLFWwindow* GetStaticWindow ();
+    
+    static int GetWidth ();
+    static int GetHeight ();
+    static void GetScreenSize (int& width, int& height);
+    
 protected:
     
     /// Main OpenGL Window
     GLFWwindow *window;
+    static GLFWwindow* staticWindow;
     
     int width;
     int height;
