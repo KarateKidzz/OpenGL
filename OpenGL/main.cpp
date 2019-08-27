@@ -8,12 +8,11 @@
 #include "Camera/Camera.hpp"
 #include "Rendering/Mesh.hpp"
 
+#include "Textures/Texture.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 #include <string>
 
@@ -55,14 +54,11 @@ const Vertex Cube [] =
     glm::vec3(1, 1, 1),     glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 0.f, 0.f),
     glm::vec3(1, -1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 1.f, 0.f),
     
-    
-    
     // Left
     glm::vec3(-1, -1, 1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
     glm::vec3(-1, -1, -1),   glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
     glm::vec3(-1, 1, -1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
     glm::vec3(-1, 1, 1),     glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
-    
     
     // Top
     glm::vec3(-1, 1, -1),   glm::vec3(0.f, 1.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
@@ -114,34 +110,15 @@ int main ()
         return EXIT_FAILURE;
     }
     
-    // TEXTURES
+    // Texture
+    Texture texture("Resources/Textures/container.jpg");
     
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);    // set texture wrapping to GL_REPEAT (default wrapping method)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char *data = stbi_load("Resources/Textures/container.jpg", &width, &height, &nrChannels, 0);
-    
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
+    if (!texture.Successful())
     {
         std::cerr << "Failed to load texture" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
     }
-    
-    stbi_image_free(data);
     
     
     shader.Select(); // don't forget to activate/use the shader before setting uniforms!
@@ -191,7 +168,7 @@ int main ()
         model = glm::translate(model, glm::vec3(5,0,0));
         glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
 
-        mesh.Draw(shader, texture);
+        mesh.Draw(shader, texture.GetID());
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

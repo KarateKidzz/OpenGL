@@ -23,18 +23,6 @@ struct Vertex
     glm::vec3 TexCoord;
 };
 
-struct Texture
-{
-    unsigned int id;
-    std::string type;
-    
-    inline Texture(unsigned int id, std::string type)
-    {
-        this->id = id;
-        this->type = type;
-    }
-};
-
 class Mesh : public Component
 {
 public:
