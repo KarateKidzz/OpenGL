@@ -7,6 +7,7 @@
 //
 
 #include "Display.hpp"
+#include <GLFW/glfw3.h>
 
 Display::Display(const int width, const int height, const char *title) :
     width(width),
