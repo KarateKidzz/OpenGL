@@ -52,9 +52,18 @@ void Camera::UpdateView()
 void Camera::CalculateVectors()
 {
     glm::vec3 forwardLocal;
-    forwardLocal.x = cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+    
+    // uses the x axis as the front so is 90 degress off (faces +X and not -Z)
+//    forwardLocal.x = cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+//    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
+//    forwardLocal.z = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+    
+    // uses the z axis as the front
+    // credit: Alex ABaronov in the comments: https://learnopengl.com/Getting-started/Camera
+    forwardLocal.x = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
     forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
-    forwardLocal.z = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+    forwardLocal.z = -cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+
     forward = glm::normalize(forwardLocal);
     right = glm::normalize(glm::cross(forward, Transform::WorldUp));
     up = glm::normalize(glm::cross(right, forward));
