@@ -20,7 +20,7 @@ struct Vertex
 {
     glm::vec3 Position;
     glm::vec3 Normal;
-    glm::vec3 TexCoord;
+    glm::vec2 TexCoord;
 };
 
 class Mesh : public Component

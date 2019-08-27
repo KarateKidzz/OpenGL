@@ -37,40 +37,40 @@ const Vertex Cube [] =
     // Positions            // Normals                  // Texture Coordinates
     
     // Front
-    glm::vec3(-1, -1, -1),  glm::vec3(0.f, 0.f, 1.f),   glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(1, -1, -1),   glm::vec3(0.f, 0.f, 1.f),   glm::vec3(1.f, 0.f, 0.f),
-    glm::vec3(1, 1, -1),    glm::vec3(0.f, 0.f, 1.f),   glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, 1, -1),   glm::vec3(0.f, 0.f, 1.f),   glm::vec3(0.f, 1.f, 0.f),
+    glm::vec3(-1, -1, -1),  glm::vec3(0.f, 0.f, 1.f),   glm::vec2(0.f, 0.f),
+    glm::vec3(1, -1, -1),   glm::vec3(0.f, 0.f, 1.f),   glm::vec2(1.f, 0.f),
+    glm::vec3(1, 1, -1),    glm::vec3(0.f, 0.f, 1.f),   glm::vec2(1.f, 1.f),
+    glm::vec3(-1, 1, -1),   glm::vec3(0.f, 0.f, 1.f),   glm::vec2(0.f, 1.f),
     
     // Right
-    glm::vec3(1, -1, -1),   glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(1, -1, 1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
-    glm::vec3(1, 1, 1),     glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(1, 1, -1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
+    glm::vec3(1, -1, -1),   glm::vec3(1.f, 0.f, 0.f),  glm::vec2(1.f, 1.f),
+    glm::vec3(1, -1, 1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec2(0.f, 1.f),
+    glm::vec3(1, 1, 1),     glm::vec3(1.f, 0.f, 0.f),  glm::vec2(0.f, 0.f),
+    glm::vec3(1, 1, -1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec2(1.f, 0.f),
     
     // Back
-    glm::vec3(-1, -1, 1),   glm::vec3(0.f, 0.f, -1.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, 1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(1.f, 0.f, 0.f),
-    glm::vec3(1, 1, 1),     glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(1, -1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 1.f, 0.f),
+    glm::vec3(-1, -1, 1),   glm::vec3(0.f, 0.f, -1.f),  glm::vec2(1.f, 1.f),
+    glm::vec3(-1, 1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec2(1.f, 0.f),
+    glm::vec3(1, 1, 1),     glm::vec3(0.f, 0.f, -1.f),  glm::vec2(0.f, 0.f),
+    glm::vec3(1, -1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec2(0.f, 1.f),
     
     // Left
-    glm::vec3(-1, -1, 1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(-1, -1, -1),   glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
-    glm::vec3(-1, 1, -1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, 1, 1),     glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
+    glm::vec3(-1, -1, 1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec2(0.f, 0.f),
+    glm::vec3(-1, -1, -1),   glm::vec3(-1.f, 0.f, 0.f),  glm::vec2(1.f, 0.f),
+    glm::vec3(-1, 1, -1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec2(1.f, 1.f),
+    glm::vec3(-1, 1, 1),     glm::vec3(-1.f, 0.f, 0.f),  glm::vec2(0.f, 1.f),
     
     // Top
-    glm::vec3(-1, 1, -1),   glm::vec3(0.f, 1.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(1, 1, -1),    glm::vec3(0.f, 1.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
-    glm::vec3(1, 1, 1),     glm::vec3(0.f, 1.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(-1, 1, 1),    glm::vec3(0.f, 1.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
+    glm::vec3(-1, 1, -1),   glm::vec3(0.f, 1.f, 0.f),  glm::vec2(1.f, 1.f),
+    glm::vec3(1, 1, -1),    glm::vec3(0.f, 1.f, 0.f),  glm::vec2(0.f, 1.f),
+    glm::vec3(1, 1, 1),     glm::vec3(0.f, 1.f, 0.f),  glm::vec2(0.f, 0.f),
+    glm::vec3(-1, 1, 1),    glm::vec3(0.f, 1.f, 0.f),  glm::vec2(1.f, 0.f),
     
     // Bottom
-    glm::vec3(-1, -1, -1),   glm::vec3(0.f, -1.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(1, -1, -1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
-    glm::vec3(1, -1, 1),     glm::vec3(0.f, -1.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, -1, 1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec3(0.f, 1.f, 0.f)
+    glm::vec3(-1, -1, -1),   glm::vec3(0.f, -1.f, 0.f),  glm::vec2(0.f, 0.f),
+    glm::vec3(1, -1, -1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec2(1.f, 0.f),
+    glm::vec3(1, -1, 1),     glm::vec3(0.f, -1.f, 0.f),  glm::vec2(1.f, 1.f),
+    glm::vec3(-1, -1, 1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec2(0.f, 1.f)
 };
 
 const unsigned int indices [] =
