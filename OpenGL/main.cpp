@@ -135,7 +135,7 @@ int main ()
     Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
-    WorldObject cubeObject(glm::vec3(5, 0, 5));
+    WorldObject cubeObject(glm::vec3(0, 0, 10));
     std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
 
     std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
@@ -165,7 +165,7 @@ int main ()
 
         
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(5,0,0));
+        model = glm::translate(model, cubeObject.Transform.Position);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
 
         mesh.Draw(shader, texture.GetID());
