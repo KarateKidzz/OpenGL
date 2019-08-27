@@ -131,17 +131,20 @@ int main ()
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
     
     Input input(openGLLoader.Display.GetWindow());
-    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, -10.0f));
+    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 0.f));
     Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
-    WorldObject cubeObject(glm::vec3(0, 0, 0));
+    WorldObject cubeObject(glm::vec3(0, 0, 10));
     std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
-
     std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
+    
     Mesh mesh(v,i);
     cubeObject.AttachComponent(&mesh);
     
+    WorldObject secondCubeObject(glm::vec3(10, 0, 0));
+    Mesh secondMesh(v,i);
+    secondCubeObject.AttachComponent(&secondMesh);
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -159,16 +162,13 @@ int main ()
         
         shader.Select();
         
-        glm::mat4 view          = camera.GetViewMatrix();
+        glm::mat4 view = glm::mat4(1.0f);
+        view          = camera.GetViewMatrix();
         unsigned int viewLoc  = glGetUniformLocation(shader.GetShaderID(), "view");
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 
-        
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubeObject.Transform.Position);
-        glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
-
         mesh.Draw(shader, texture.GetID());
+        secondMesh.Draw(shader, texture.GetID());
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

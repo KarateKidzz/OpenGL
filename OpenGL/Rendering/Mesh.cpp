@@ -7,7 +7,9 @@
 //
 
 #include "Mesh.hpp"
-
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Mesh::Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies) :
 Verticies(verticies),
@@ -75,6 +77,10 @@ void Mesh::SetupMesh() {
 
 void Mesh::Draw(const Shader &shader, const int tex)
 {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, Transform->Position);
+    glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
+    
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, tex);
     glBindVertexArray(VAO);
