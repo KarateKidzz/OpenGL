@@ -43,11 +43,26 @@ const Vertex Cube [] =
     glm::vec3(1, 1, -1),    glm::vec3(0.f, 0.f, 1.f),   glm::vec3(1.f, 1.f, 0.f),
     glm::vec3(-1, 1, -1),   glm::vec3(0.f, 0.f, 1.f),   glm::vec3(0.f, 1.f, 0.f),
     
+    // Right
+    glm::vec3(1, -1, -1),   glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
+    glm::vec3(1, -1, 1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
+    glm::vec3(1, 1, 1),     glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
+    glm::vec3(1, 1, -1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
+    
     // Back
     glm::vec3(-1, -1, 1),   glm::vec3(0.f, 0.f, -1.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(1, -1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 1.f, 0.f),
-    glm::vec3(1, 1, 1),     glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 0.f, 0.f),
     glm::vec3(-1, 1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(1.f, 0.f, 0.f),
+    glm::vec3(1, 1, 1),     glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 0.f, 0.f),
+    glm::vec3(1, -1, 1),    glm::vec3(0.f, 0.f, -1.f),  glm::vec3(0.f, 1.f, 0.f),
+    
+    
+    
+    // Left
+    glm::vec3(-1, -1, 1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
+    glm::vec3(-1, -1, -1),   glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
+    glm::vec3(-1, 1, -1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
+    glm::vec3(-1, 1, 1),     glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
+    
     
     // Top
     glm::vec3(-1, 1, -1),   glm::vec3(0.f, 1.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
@@ -59,19 +74,7 @@ const Vertex Cube [] =
     glm::vec3(-1, -1, -1),   glm::vec3(0.f, -1.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
     glm::vec3(1, -1, -1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
     glm::vec3(1, -1, 1),     glm::vec3(0.f, -1.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, -1, 1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
-    
-    // Right
-    glm::vec3(1, -1, -1),   glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(1, -1, 1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f),
-    glm::vec3(1, 1, 1),     glm::vec3(1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(1, 1, -1),    glm::vec3(1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
-    
-    // Left
-    glm::vec3(-1, -1, -1),   glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(-1, 1, -1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 0.f, 0.f),
-    glm::vec3(-1, 1, 1),     glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(1.f, 1.f, 0.f),
-    glm::vec3(-1, -1, 1),    glm::vec3(-1.f, 0.f, 0.f),  glm::vec3(0.f, 1.f, 0.f)
+    glm::vec3(-1, -1, 1),    glm::vec3(0.f, -1.f, 0.f),  glm::vec3(0.f, 1.f, 0.f)
 };
 
 const unsigned int indices [] =
@@ -79,15 +82,15 @@ const unsigned int indices [] =
     // front
     0, 1, 3, 3, 1, 2,
     // right
-    1, 5, 2, 2, 5, 6,
+    4, 5, 6, 6, 7, 4,
     // back
-    5, 4, 6, 6, 4, 7,
+    8, 9, 11, 11, 9, 10,
     // left
-    4, 0, 7, 7, 0, 3,
+    12, 13, 15, 15, 13, 14,
     // top
-    3, 2, 7, 7, 2, 6,
+    16, 17, 19, 19, 17, 18,
     // bottom
-    4, 5, 0, 0, 5, 1
+    20, 21, 23, 23, 21, 22
 };
 
 int main ()
