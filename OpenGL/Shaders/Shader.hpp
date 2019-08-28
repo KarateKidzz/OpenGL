@@ -26,7 +26,8 @@ public:
     bool CompilationWasSuccessful () const;
     
     /// Sets OpenGL to use this shader program
-    void Select ();
+    void Select () const;
+    void Deselect () const;
     
     GLuint GetShaderID () const;
     

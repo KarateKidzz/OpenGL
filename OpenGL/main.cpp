@@ -1,6 +1,10 @@
 #include <iostream>
+#include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "Windows/Display.hpp"
 #include "Shaders/Shader.hpp"
 #include "Application/OpenGLLoader.hpp"
@@ -10,11 +14,6 @@
 #include "Textures/Texture.hpp"
 #include "Components/DebugInput.hpp"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <string>
 
 /*
  For my future self:
@@ -108,6 +107,15 @@ int main ()
         return EXIT_FAILURE;
     }
     
+    Shader lightShader ("Resources/Shaders/light.vert", "Resources/Shaders/light.frag");
+    
+    if (!lightShader.CompilationWasSuccessful())
+    {
+        std::cerr << "Failed to load shaders" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+    
     // Texture
     Texture texture("Resources/Textures/container.jpg");
     
@@ -122,13 +130,21 @@ int main ()
     shader.Select(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
     glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
+    
+    shader.setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    shader.setVec3("lightColor",  glm::vec3(1.0f, 1.0f, 1.0f));
+    
+    
 
     
     Input input(openGLLoader.Display.GetWindow());
     
     WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 0.f));
-    Camera camera (&shader, 10, 0.1f);
+    Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
+    
+    camera.AddShader(&shader);
+    camera.AddShader(&lightShader);
     
     WorldObject cubeObject(glm::vec3(0, 0, 10));
     std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
@@ -156,12 +172,11 @@ int main ()
         
         input.Update();
         
-        shader.Select();
-        
         cameraObject.Update(deltaTime);
 
         mesh.Draw(shader, texture.GetID());
-        secondMesh.Draw(shader, texture.GetID());
+
+        secondMesh.Draw(lightShader, texture.GetID());
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

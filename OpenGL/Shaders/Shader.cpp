@@ -84,8 +84,13 @@ bool Shader::CompilationWasSuccessful() const {
     return foundVertexShader && foundFragmentShader && vertexShaderResult && fragmentShaderResult && shaderProgramResult;
 }
 
-void Shader::Select() { 
+void Shader::Select() const { 
     glUseProgram(shaderProgram);
+}
+
+void Shader::Deselect() const
+{
+    glUseProgram(0);
 }
 
 std::string Shader::ReadShader(const char *path, bool &success) const

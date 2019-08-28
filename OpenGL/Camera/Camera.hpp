@@ -31,7 +31,6 @@ public:
     void AddShader (Shader* shader);
     
 private:
-    Shader* shader;
     std::vector<Shader*> shaders;
     
     float movementSpeed;

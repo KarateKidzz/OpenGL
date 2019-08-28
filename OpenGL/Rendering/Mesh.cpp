@@ -77,6 +77,8 @@ void Mesh::SetupMesh() {
 
 void Mesh::Draw(const Shader &shader, const int tex)
 {
+    shader.Select();
+    
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, Transform->Position);
     glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
@@ -87,4 +89,6 @@ void Mesh::Draw(const Shader &shader, const int tex)
     glDrawElements(GL_TRIANGLES, static_cast<int>(Indices.size()) , GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
     glActiveTexture(GL_TEXTURE0);
+    
+    shader.Deselect();
 }

@@ -10,6 +10,7 @@
 #include "../Shaders/Shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "../Windows/Display.hpp"
+
 #include <iostream>
 
 void Camera::Update(const float& deltaTime)
@@ -46,20 +47,21 @@ void Camera::Update(const float& deltaTime)
     CalculateVectors();
     
     UpdateView();
-    
-    for (Shader* s : shaders)
-    {
-        if(s != nullptr)
-        {
-            s->Select();
-            s->setMat4("view", view);
-        }
-    }
 }
 
 void Camera::UpdateView()
 {
     view = glm::lookAt(GetWorldObject().Transform.Position, GetWorldObject().Transform.Position + forward, up);
+    
+    for (const Shader* s : shaders)
+    {
+        if(s)
+        {
+            s->Select();
+            s->setMat4("view", view);
+            s->Deselect();
+        }
+    }
 }
 
 void Camera::CalculateVectors()
@@ -88,7 +90,6 @@ glm::mat4 Camera::GetViewMatrix() const
 }
 
 Camera::Camera(float movementSpeed, float mouseSensitivity) : Component::Component(), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
-
 }
 
 void Camera::Awake()
@@ -103,7 +104,8 @@ void Camera::AddShader(Shader *shader)
     Display::GetScreenSize(w, h);
     glm::mat4 projection    = glm::mat4(1.0f);
     projection = glm::perspective(glm::radians(45.0f), (float)w / (float)h, 0.1f, 100.0f);
-    shader->setMat4("projection", view);
+    shader->setMat4("projection", projection);
+    shader->Deselect();
 
     shaders.push_back(shader);
 }
