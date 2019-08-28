@@ -141,11 +141,11 @@ int main ()
     // set material properties
     shader.setInt("material.diffuse", 0);
     shader.setInt("material.specular", 1);
-    shader.setFloat("material.shininess", 32.0f);
+    shader.setFloat("material.shininess", 64.0f);
     
     // set light properties
     shader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
-    shader.setVec3("light.diffuse",  0.9f, 0.9f, 0.9f); // darken the light a bit to fit the scene
+    shader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
     shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
     
     Input input(openGLLoader.Display.GetWindow());

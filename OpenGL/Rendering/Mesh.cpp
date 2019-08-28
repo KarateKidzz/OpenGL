@@ -98,7 +98,7 @@ void Mesh::Draw(const Shader &shader, const int tex)
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<int>(Indices.size()) , GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(0);
     
     shader.Deselect();
 }
