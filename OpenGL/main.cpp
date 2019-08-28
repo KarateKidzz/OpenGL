@@ -180,17 +180,6 @@ int main ()
         shader.Select();
         shader.setVec3("light.position", cameraObject.Transform.Position);
         shader.setVec3("viewPos", cameraObject.Transform.Position);
-        
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
-        
-        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f); // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        
-        shader.setVec3("light.ambient", ambientColor);
-        shader.setVec3("light.diffuse", diffuseColor);
 
         mesh.Draw(shader, texture.GetID());
 
