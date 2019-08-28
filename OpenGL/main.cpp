@@ -135,7 +135,7 @@ int main ()
     shader.setVec3("lightColor",  glm::vec3(1.0f, 1.0f, 1.0f));
     
     
-
+    shader.setVec3("lightPos", glm::vec3(0,0,0));
     
     Input input(openGLLoader.Display.GetWindow());
     
@@ -146,14 +146,14 @@ int main ()
     camera.AddShader(&shader);
     camera.AddShader(&lightShader);
     
-    WorldObject cubeObject(glm::vec3(0, 0, 10));
+    WorldObject cubeObject(glm::vec3(0, 0, 5));
     std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
     std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
     
     Mesh mesh(v,i);
     cubeObject.AttachComponent(&mesh);
     
-    WorldObject secondCubeObject(glm::vec3(10, 0, 0), glm::vec3(0, 45.f, 0), glm::vec3(.5f,.5f,.5f));
+    WorldObject secondCubeObject(glm::vec3(5, 2, 0), glm::vec3(25, 45.f, 0), glm::vec3(.5f,.5f,.5f));
     Mesh secondMesh(v,i);
     secondCubeObject.AttachComponent(&secondMesh);
     
@@ -173,6 +173,10 @@ int main ()
         input.Update();
         
         cameraObject.Update(deltaTime);
+        
+        shader.Select();
+        shader.setVec3("lightPos", secondCubeObject.Transform.Position);
+        shader.setVec3("viewPos", cameraObject.Transform.Position);
 
         mesh.Draw(shader, texture.GetID());
 
