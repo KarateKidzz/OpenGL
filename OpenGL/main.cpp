@@ -192,7 +192,7 @@ int main ()
         cameraObject.Update(deltaTime);
         
         shader.Select();
-        shader.setVec3("light.position", cameraObject.Transform.Position);
+        shader.setVec3("light.position", secondCubeObject.Transform.Position);
         shader.setVec3("viewPos", cameraObject.Transform.Position);
 
         mesh.Draw(shader, diffuseTexture.GetID());
