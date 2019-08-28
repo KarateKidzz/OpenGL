@@ -25,7 +25,6 @@ class Camera : public Component
 public:
     Camera(float movementSpeed, float mouseSensitivity);
     glm::mat4 GetViewMatrix() const;
-    void Awake() override;
     void Update (const float& deltaTime) override;
     
     void AddShader (Shader* shader);
@@ -42,7 +41,6 @@ private:
     glm::vec3 right;
     
     void UpdateView ();
-    void CalculateVectors ();
 };
 
 #endif /* Camera_hpp */

@@ -19,17 +19,17 @@ void Camera::Update(const float& deltaTime)
     float velocity = movementSpeed * deltaTime;
     
     if (Input::GetKeyDown(GLFW_KEY_W))
-        Transform->Position += forward * velocity;
+        Transform->Position += Transform->Forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_S))
-        Transform->Position -= forward * velocity;
+        Transform->Position -= Transform->Forward * velocity;
     if (Input::GetKeyDown(GLFW_KEY_A))
-        Transform->Position -= right * velocity;
+        Transform->Position -= Transform->Right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_D))
-        Transform->Position += right * velocity;
+        Transform->Position += Transform->Right * velocity;
     if (Input::GetKeyDown(GLFW_KEY_E))
-        Transform->Position += up * velocity;
+        Transform->Position += Transform->Up * velocity;
     if (Input::GetKeyDown(GLFW_KEY_Q))
-        Transform->Position -= up * velocity;
+        Transform->Position -= Transform->Up * velocity;
     
     // process mouse movement
     float mouseX = Input::MouseXOffset() * mouseSensitivity;
@@ -44,14 +44,20 @@ void Camera::Update(const float& deltaTime)
         Transform->Rotation.x = -89.0f;
     
     // recalculate vectors
-    CalculateVectors();
+//    CalculateVectors();
+    Transform->CalculateDirection();
     
     UpdateView();
 }
 
 void Camera::UpdateView()
 {
-    view = glm::lookAt(GetWorldObject().Transform.Position, GetWorldObject().Transform.Position + forward, up);
+//    std::cout << Transform->Forward.x << std::endl;
+//    std::cout << Transform->Forward.y << std::endl;
+//    std::cout << Transform->Forward.z << std::endl;
+    
+    view = glm::lookAt(Transform->Position, Transform->Position + Transform->Forward, Transform->Up);
+//    view = glm::lookAt(Transform->Position, Transform->Position + forward, up);
     
     for (const Shader* s : shaders)
     {
@@ -64,29 +70,29 @@ void Camera::UpdateView()
     }
 }
 
-void Camera::CalculateVectors()
-{
-    glm::vec3 forwardLocal;
-    
-    // uses the x axis as the front so is 90 degress off (faces +X and not -Z)
-//    forwardLocal.x = cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
-//    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
-//    forwardLocal.z = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
-    
-    // uses the z axis as the front
-    // credit: Alex ABaronov in the comments: https://learnopengl.com/Getting-started/Camera
-    forwardLocal.x = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
-    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
-    forwardLocal.z = -cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+//void Camera::CalculateVectors()
+//{
+//    glm::vec3 forwardLocal;
 //
-//    forwardLocal.x = cos(glm::radians(Transform->Rotation.z)) * sin(glm::radians(Transform->Rotation.y));
-//    forwardLocal.y = cos(glm::radians(Transform->Rotation.z) * sin(glm::radians(Transform->Rotation.x)));
-//    forwardLocal.z = cos(glm::radians(Transform->Rotation.y)) * sin(glm::radians(Transform->Rotation.x));
-
-    forward = glm::normalize(forwardLocal);
-    right = glm::normalize(glm::cross(forward, Transform::WorldUp));
-    up = glm::normalize(glm::cross(right, forward));
-}
+//    // uses the x axis as the front so is 90 degress off (faces +X and not -Z)
+////    forwardLocal.x = cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+////    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
+////    forwardLocal.z = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+//
+//    // uses the z axis as the front
+//    // credit: Alex ABaronov in the comments: https://learnopengl.com/Getting-started/Camera
+//    forwardLocal.x = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+//    forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
+//    forwardLocal.z = -cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+////
+////    forwardLocal.x = cos(glm::radians(Transform->Rotation.z)) * sin(glm::radians(Transform->Rotation.y));
+////    forwardLocal.y = cos(glm::radians(Transform->Rotation.z) * sin(glm::radians(Transform->Rotation.x)));
+////    forwardLocal.z = cos(glm::radians(Transform->Rotation.y)) * sin(glm::radians(Transform->Rotation.x));
+//
+//    forward = glm::normalize(forwardLocal);
+//    right = glm::normalize(glm::cross(forward, Transform::WorldUp));
+//    up = glm::normalize(glm::cross(right, forward));
+//}
 
 glm::mat4 Camera::GetViewMatrix() const
 {
@@ -94,11 +100,6 @@ glm::mat4 Camera::GetViewMatrix() const
 }
 
 Camera::Camera(float movementSpeed, float mouseSensitivity) : Component::Component(), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
-}
-
-void Camera::Awake()
-{
-    CalculateVectors();
 }
 
 void Camera::AddShader(Shader *shader)

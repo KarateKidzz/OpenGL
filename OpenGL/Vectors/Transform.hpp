@@ -31,7 +31,16 @@ public:
     
     static const glm::vec3 WorldUp;
     
+    const glm::vec3& Forward;
+    const glm::vec3& Right;
+    const glm::vec3& Up;
+    
+    void CalculateDirection ();
+    
 private:
+    glm::vec3 forward;
+    glm::vec3 right;
+    glm::vec3 up;
 };
 
 #endif /* Transform_hpp */

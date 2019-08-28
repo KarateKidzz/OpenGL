@@ -25,6 +25,7 @@ WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot) : WorldObject::WorldObjec
 
 WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale) : Transform(pos, rot, scale)
 {
+    Transform.CalculateDirection();
 }
 
 
