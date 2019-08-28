@@ -22,6 +22,19 @@ struct Vertex
     glm::vec2 TexCoord;
 };
 
+struct MeshTexture
+{
+    unsigned int TextureUnit;
+    unsigned int TextureID;
+    
+    MeshTexture(unsigned int textureUnit, unsigned int textureID)
+    {
+        TextureUnit = textureUnit;
+        TextureID = textureID;
+    }
+    
+};
+
 class Mesh : public Component
 {
 public:
@@ -30,6 +43,7 @@ public:
     
     std::vector<Vertex> Verticies;
     std::vector<unsigned int> Indices;
+    std::vector<MeshTexture> Textures;
     
     void Draw (const Shader& shader, const int tex);
     

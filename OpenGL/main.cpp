@@ -117,9 +117,18 @@ int main ()
     }
     
     // Texture
-    Texture texture("Resources/Textures/container2.png");
+    Texture diffuseTexture("Resources/Textures/container2.png");
     
-    if (!texture.Successful())
+    if (!diffuseTexture.Successful())
+    {
+        std::cerr << "Failed to load texture" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+    
+    Texture specularTexture("Resources/Textures/container2_specular.png");
+    
+    if (!specularTexture.Successful())
     {
         std::cerr << "Failed to load texture" << std::endl;
         glfwTerminate();
@@ -127,15 +136,14 @@ int main ()
     }
     
     
-    shader.Select(); // don't forget to activate/use the shader before setting uniforms!
-    // either set it manually like so:
-    glUniform1i(glGetUniformLocation(shader.GetShaderID(), "texture1"), 0);
+    shader.Select();
     
-    shader.setVec3("material.ambient",  0.2f, 0.2f, 0.2f);
-    shader.setVec3("material.diffuse",  1.0f, 1.0f, 1.0f);
-    shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    // set material properties
+    shader.setInt("material.diffuse", 0);
+    shader.setInt("material.specular", 1);
     shader.setFloat("material.shininess", 32.0f);
     
+    // set light properties
     shader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
     shader.setVec3("light.diffuse",  0.9f, 0.9f, 0.9f); // darken the light a bit to fit the scene
     shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
@@ -160,6 +168,12 @@ int main ()
     Mesh secondMesh(v,i);
     secondCubeObject.AttachComponent(&secondMesh);
     
+    MeshTexture diffuse(0,diffuseTexture.GetID());
+    MeshTexture spec(1, specularTexture.GetID());
+    
+    mesh.Textures.push_back(diffuse);
+    mesh.Textures.push_back(spec);
+    
     DebugInput db;
     cameraObject.AttachComponent(&db);
     
@@ -181,9 +195,9 @@ int main ()
         shader.setVec3("light.position", cameraObject.Transform.Position);
         shader.setVec3("viewPos", cameraObject.Transform.Position);
 
-        mesh.Draw(shader, texture.GetID());
+        mesh.Draw(shader, diffuseTexture.GetID());
 
-        secondMesh.Draw(lightShader, texture.GetID());
+        secondMesh.Draw(lightShader, diffuseTexture.GetID());
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

@@ -87,8 +87,14 @@ void Mesh::Draw(const Shader &shader, const int tex)
     model = glm::scale(model, Transform->Scale);
     glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
     
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, tex);
+    for (MeshTexture mt : Textures)
+    {
+        glActiveTexture(GL_TEXTURE0 + mt.TextureUnit);
+        glBindTexture(GL_TEXTURE_2D, mt.TextureID);
+    }
+    
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, tex);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<int>(Indices.size()) , GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
