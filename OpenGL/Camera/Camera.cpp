@@ -10,6 +10,7 @@
 #include "../Shaders/Shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include "../Windows/Display.hpp"
+#include <iostream>
 
 void Camera::Update(const float& deltaTime)
 {
@@ -46,8 +47,14 @@ void Camera::Update(const float& deltaTime)
     
     UpdateView();
     
-    unsigned int viewLoc  = glGetUniformLocation(shader->GetShaderID(), "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+    for (Shader* s : shaders)
+    {
+        if(s != nullptr)
+        {
+            s->Select();
+            s->setMat4("view", view);
+        }
+    }
 }
 
 void Camera::UpdateView()
@@ -80,13 +87,8 @@ glm::mat4 Camera::GetViewMatrix() const
     return view;
 }
 
-Camera::Camera(Shader* shader, float movementSpeed, float mouseSensitivity) : Component::Component(), shader(shader), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
-    int w,h;
-    Display::GetScreenSize(w, h);
-    glm::mat4 projection    = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)w / (float)h, 0.1f, 100.0f);
-    unsigned int projLoc  = glGetUniformLocation(shader->GetShaderID(), "projection");
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+Camera::Camera(float movementSpeed, float mouseSensitivity) : Component::Component(), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity) {
+
 }
 
 void Camera::Awake()
@@ -94,3 +96,14 @@ void Camera::Awake()
     CalculateVectors();
 }
 
+void Camera::AddShader(Shader *shader)
+{
+    shader->Select();
+    int w,h;
+    Display::GetScreenSize(w, h);
+    glm::mat4 projection    = glm::mat4(1.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)w / (float)h, 0.1f, 100.0f);
+    shader->setMat4("projection", view);
+
+    shaders.push_back(shader);
+}
