@@ -137,6 +137,11 @@ int main ()
     
     shader.setVec3("lightPos", glm::vec3(0,0,0));
     
+    shader.setVec3("material.ambient",  1.0f, 0.5f, 0.31f);
+    shader.setVec3("material.diffuse",  1.0f, 0.5f, 0.31f);
+    shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    shader.setFloat("material.shininess", 32.0f);
+    
     Input input(openGLLoader.Display.GetWindow());
     
     WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 0.f));
