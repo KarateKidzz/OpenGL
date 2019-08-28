@@ -117,7 +117,7 @@ int main ()
     }
     
     // Texture
-    Texture texture("Resources/Textures/container.jpg");
+    Texture texture("Resources/Textures/container2.png");
     
     if (!texture.Successful())
     {
