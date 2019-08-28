@@ -81,6 +81,7 @@ void Mesh::Draw(const Shader &shader, const int tex)
     
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, Transform->Position);
+    model = glm::scale(model, Transform->Scale);
     glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "model"), 1, GL_FALSE, &model[0][0]);
     
     glActiveTexture(GL_TEXTURE0);

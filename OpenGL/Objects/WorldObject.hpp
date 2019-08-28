@@ -27,6 +27,7 @@ public:
     WorldObject();
     WorldObject(glm::vec3 pos);
     WorldObject(glm::vec3 pos, glm::vec3 rot);
+    WorldObject(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale);
     Transform Transform;
     
     virtual void Update(const float& deltaTime);

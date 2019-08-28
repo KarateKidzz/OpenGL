@@ -20,11 +20,14 @@ public:
     Transform ();
     Transform (glm::vec3 pos);
     Transform (glm::vec3 pos, glm::vec3 rot);
+    Transform (glm::vec3 pos, glm::vec3 rot, glm::vec3 scale);
     
     /// World space position
     glm::vec3 Position;
     /// World space rotation in eulers
     glm::vec3 Rotation;
+    /// World space scale
+    glm::vec3 Scale;
     
     static const glm::vec3 WorldUp;
     

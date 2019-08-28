@@ -19,9 +19,14 @@ WorldObject::WorldObject(glm::vec3 pos) : WorldObject::WorldObject(pos, glm::vec
 
 }
 
-WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot) : Transform(pos, rot)
+WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot) : WorldObject::WorldObject(pos, rot, glm::vec3(1.0f, 1.0f, 1.0f))
 {
 }
+
+WorldObject::WorldObject(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale) : Transform(pos, rot, scale)
+{
+}
+
 
 void WorldObject::Update(const float &deltaTime)
 {

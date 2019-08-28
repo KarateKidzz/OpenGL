@@ -153,7 +153,7 @@ int main ()
     Mesh mesh(v,i);
     cubeObject.AttachComponent(&mesh);
     
-    WorldObject secondCubeObject(glm::vec3(10, 0, 0));
+    WorldObject secondCubeObject(glm::vec3(10, 0, 0), glm::vec3(0, 45.f, 0), glm::vec3(.5f,.5f,.5f));
     Mesh secondMesh(v,i);
     secondCubeObject.AttachComponent(&secondMesh);
     
