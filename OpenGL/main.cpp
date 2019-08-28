@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -148,9 +149,15 @@ int main ()
     shader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
     shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
     
+    shader.setFloat("light.constant",  1.0f);
+    shader.setFloat("light.linear",    0.09f);
+    shader.setFloat("light.quadratic", 0.032f);
+    
+    shader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+    
     Input input(openGLLoader.Display.GetWindow());
     
-    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, 0.f));
+    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, -5.f), glm::vec3(0,180,0));
     Camera camera (10, 0.1f);
     cameraObject.AttachComponent(&camera);
     
@@ -164,7 +171,7 @@ int main ()
     Mesh mesh(v,i);
     cubeObject.AttachComponent(&mesh);
     
-    WorldObject secondCubeObject(glm::vec3(5, 2, 0), glm::vec3(25, 45.f, 0), glm::vec3(.5f,.5f,.5f));
+    WorldObject secondCubeObject(glm::vec3(5, 2, 0), glm::vec3(0, -45, 0), glm::vec3(.5f,.5f,.5f));
     Mesh secondMesh(v,i);
     secondCubeObject.AttachComponent(&secondMesh);
     
@@ -176,6 +183,22 @@ int main ()
     
     DebugInput db;
     cameraObject.AttachComponent(&db);
+    
+    std::vector<std::unique_ptr<WorldObject*>> cubes;
+    std::vector<std::unique_ptr<Mesh*>> meshes;
+    
+    for(int index = 0; index < 10; index++)
+    {
+        WorldObject* w = new WorldObject(glm::vec3(index*2,index*2,index*2));
+        Mesh* m = new Mesh(v,i);
+        w->AttachComponent(m);
+        
+        m->Textures.push_back(diffuse);
+        m->Textures.push_back(spec);
+        
+        cubes.push_back(std::make_unique<WorldObject*>(w));
+        meshes.push_back(std::make_unique<Mesh*>(m));
+    }
     
     // Main loop
     while(!openGLLoader.Display.ShouldClose())
@@ -191,13 +214,28 @@ int main ()
         
         cameraObject.Update(deltaTime);
         
+        if (Input::GetKeyDown(GLFW_KEY_Z))
+        {
+            secondCubeObject.Transform.Rotation.y += 25 * deltaTime;
+            if (secondCubeObject.Transform.Rotation.y > 360)
+                secondCubeObject.Transform.Rotation.y = 0;
+        }
+        
         shader.Select();
         shader.setVec3("light.position", secondCubeObject.Transform.Position);
+        shader.setVec3("light.direction", glm::radians(secondCubeObject.Transform.Rotation));
         shader.setVec3("viewPos", cameraObject.Transform.Position);
 
-        mesh.Draw(shader, diffuseTexture.GetID());
+        mesh.Draw(shader);
 
-        secondMesh.Draw(lightShader, diffuseTexture.GetID());
+        secondMesh.Draw(lightShader);
+        
+        for (std::unique_ptr<Mesh*>& m : meshes)
+        {
+            Mesh* meshPointer = *m;
+            meshPointer->Draw(shader);
+            
+        }
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

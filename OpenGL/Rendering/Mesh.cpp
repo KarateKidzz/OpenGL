@@ -75,7 +75,7 @@ void Mesh::SetupMesh() {
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(const Shader &shader, const int tex)
+void Mesh::Draw(const Shader &shader)
 {
     shader.Select();
     

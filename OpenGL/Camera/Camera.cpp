@@ -78,6 +78,10 @@ void Camera::CalculateVectors()
     forwardLocal.x = sin(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
     forwardLocal.y = sin(glm::radians(Transform->Rotation.x));
     forwardLocal.z = -cos(glm::radians(Transform->Rotation.y)) * cos(glm::radians(Transform->Rotation.x));
+//
+//    forwardLocal.x = cos(glm::radians(Transform->Rotation.z)) * sin(glm::radians(Transform->Rotation.y));
+//    forwardLocal.y = cos(glm::radians(Transform->Rotation.z) * sin(glm::radians(Transform->Rotation.x)));
+//    forwardLocal.z = cos(glm::radians(Transform->Rotation.y)) * sin(glm::radians(Transform->Rotation.x));
 
     forward = glm::normalize(forwardLocal);
     right = glm::normalize(glm::cross(forward, Transform::WorldUp));

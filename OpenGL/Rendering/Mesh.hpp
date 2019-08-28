@@ -45,7 +45,7 @@ public:
     std::vector<unsigned int> Indices;
     std::vector<MeshTexture> Textures;
     
-    void Draw (const Shader& shader, const int tex);
+    void Draw (const Shader& shader);
     
 private:
     unsigned int VAO, VBO, EBO;
