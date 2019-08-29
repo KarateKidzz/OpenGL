@@ -153,7 +153,7 @@ int main ()
     shader.setFloat("light.linear",    0.09f);
     shader.setFloat("light.quadratic", 0.032f);
     
-    shader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+    shader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
     
     Input input(openGLLoader.Display.GetWindow());
     
@@ -217,13 +217,14 @@ int main ()
         if (Input::GetKeyDown(GLFW_KEY_Z))
         {
             secondCubeObject.Transform.Rotation.y += 25 * deltaTime;
-            if (secondCubeObject.Transform.Rotation.y > 360)
-                secondCubeObject.Transform.Rotation.y = 0;
+            secondCubeObject.Transform.Rotation.x += 10 * deltaTime;
+            secondCubeObject.Transform.Rotation.z += 15 * deltaTime;
         }
+        secondCubeObject.Transform.CalculateDirection();
         
         shader.Select();
-        shader.setVec3("light.position", secondCubeObject.Transform.Position);
-        shader.setVec3("light.direction", glm::radians(secondCubeObject.Transform.Rotation));
+        shader.setVec3("light.position", cameraObject.Transform.Position);
+        shader.setVec3("light.direction", cameraObject.Transform.Forward);
         shader.setVec3("viewPos", cameraObject.Transform.Position);
 
         mesh.Draw(shader);
