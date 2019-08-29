@@ -154,6 +154,7 @@ int main ()
     shader.setFloat("light.quadratic", 0.032f);
     
     shader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
+    shader.setFloat("light.outerCutoff", glm::cos(glm::radians(17.5f)));
     
     Input input(openGLLoader.Display.GetWindow());
     
