@@ -136,6 +136,49 @@ int main ()
         return EXIT_FAILURE;
     }
     
+    Input input(openGLLoader.Display.GetWindow());
+    
+    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, -5.f), glm::vec3(0,180,0));
+    Camera camera (10, 0.1f);
+    cameraObject.AttachComponent(&camera);
+    
+    std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
+    std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
+    
+    MeshTexture diffuse(0,diffuseTexture.GetID());
+    MeshTexture spec(1, specularTexture.GetID());
+    
+    WorldObject lightOne(glm::vec3(3, 0, -3));
+    WorldObject lightTwo(glm::vec3(6, 10.0f, 10));
+    WorldObject lightThree(glm::vec3(16, 17, 10));
+    WorldObject lightFour(glm::vec3(20, 22, 20));
+    
+    Mesh meshOne(v,i);
+    
+    meshOne.Textures.push_back(diffuse);
+    meshOne.Textures.push_back(spec);
+    
+    Mesh meshTwo(v,i);
+    
+    meshTwo.Textures.push_back(diffuse);
+    meshTwo.Textures.push_back(spec);
+    
+    Mesh meshThree(v,i);
+    
+    meshThree.Textures.push_back(diffuse);
+    meshThree.Textures.push_back(spec);
+    
+    Mesh meshFour(v,i);
+    
+    meshFour.Textures.push_back(diffuse);
+    meshFour.Textures.push_back(spec);
+    
+    lightOne.AttachComponent(&meshOne);
+    lightTwo.AttachComponent(&meshTwo);
+    lightThree.AttachComponent(&meshThree);
+    lightFour.AttachComponent(&meshFour);
+    
+                         
     
     shader.Select();
     
@@ -144,43 +187,66 @@ int main ()
     shader.setInt("material.specular", 1);
     shader.setFloat("material.shininess", 64.0f);
     
-    // set light properties
-    shader.setVec3("light.ambient",  0.2f, 0.2f, 0.2f);
-    shader.setVec3("light.diffuse",  0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
-    shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+    // set directional light properties
+    shader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+    shader.setVec3("dirLight.ambient",  0.2f, 0.2f, 0.2f);
+    shader.setVec3("dirLight.diffuse",  0.5f, 0.5f, 0.5f);
+    shader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
     
-    shader.setFloat("light.constant",  1.0f);
-    shader.setFloat("light.linear",    0.09f);
-    shader.setFloat("light.quadratic", 0.032f);
+    //point lights
+    shader.setVec3("pointLights[0].position", lightOne.Transform.Position);
+    shader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+    shader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+    shader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+    shader.setFloat("pointLights[0].constant", 1.0f);
+    shader.setFloat("pointLights[0].linear", 0.09);
+    shader.setFloat("pointLights[0].quadratic", 0.032);
     
-    shader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
-    shader.setFloat("light.outerCutoff", glm::cos(glm::radians(17.5f)));
+    shader.setVec3("pointLights[1].position", lightTwo.Transform.Position);
+    shader.setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+    shader.setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
+    shader.setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+    shader.setFloat("pointLights[1].constant", 1.0f);
+    shader.setFloat("pointLights[1].linear", 0.09);
+    shader.setFloat("pointLights[1].quadratic", 0.032);
     
-    Input input(openGLLoader.Display.GetWindow());
+    shader.setVec3("pointLights[2].position", lightThree.Transform.Position);
+    shader.setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+    shader.setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
+    shader.setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+    shader.setFloat("pointLights[2].constant", 1.0f);
+    shader.setFloat("pointLights[2].linear", 0.09);
+    shader.setFloat("pointLights[2].quadratic", 0.032);
     
-    WorldObject cameraObject(glm::vec3(0.0f, 0.0f, -5.f), glm::vec3(0,180,0));
-    Camera camera (10, 0.1f);
-    cameraObject.AttachComponent(&camera);
+    shader.setVec3("pointLights[3].position", lightFour.Transform.Position);
+    shader.setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+    shader.setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
+    shader.setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+    shader.setFloat("pointLights[3].constant", 1.0f);
+    shader.setFloat("pointLights[3].linear", 0.09);
+    shader.setFloat("pointLights[3].quadratic", 0.032);
+    
+    // spotLight
+    shader.setVec3("spotLight.position", cameraObject.Transform.Position);
+    shader.setVec3("spotLight.direction", cameraObject.Transform.Forward);
+    shader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+    shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+    shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+    shader.setFloat("spotLight.constant", 1.0f);
+    shader.setFloat("spotLight.linear", 0.09);
+    shader.setFloat("spotLight.quadratic", 0.032);
+    shader.setFloat("spotLight.cutoff", glm::cos(glm::radians(12.5f)));
+    shader.setFloat("spotLight.outerCutoff", glm::cos(glm::radians(15.0f)));
+    
+    
+    
+    
     
     camera.AddShader(&shader);
     camera.AddShader(&lightShader);
     
-    WorldObject cubeObject(glm::vec3(0, 0, 5));
-    std::vector<Vertex> v(Cube, Cube + sizeof(Cube) / sizeof(Cube[0]));
-    std::vector<unsigned int> i(indices, indices + sizeof indices / sizeof indices[0]);
     
-    Mesh mesh(v,i);
-    cubeObject.AttachComponent(&mesh);
     
-    WorldObject secondCubeObject(glm::vec3(5, 2, 0), glm::vec3(0, -45, 0), glm::vec3(.5f,.5f,.5f));
-    Mesh secondMesh(v,i);
-    secondCubeObject.AttachComponent(&secondMesh);
-    
-    MeshTexture diffuse(0,diffuseTexture.GetID());
-    MeshTexture spec(1, specularTexture.GetID());
-    
-    mesh.Textures.push_back(diffuse);
-    mesh.Textures.push_back(spec);
     
     DebugInput db;
     cameraObject.AttachComponent(&db);
@@ -215,22 +281,12 @@ int main ()
         
         cameraObject.Update(deltaTime);
         
-        if (Input::GetKeyDown(GLFW_KEY_Z))
-        {
-            secondCubeObject.Transform.Rotation.y += 25 * deltaTime;
-            secondCubeObject.Transform.Rotation.x += 10 * deltaTime;
-            secondCubeObject.Transform.Rotation.z += 15 * deltaTime;
-        }
-        secondCubeObject.Transform.CalculateDirection();
-        
         shader.Select();
-        shader.setVec3("light.position", cameraObject.Transform.Position);
-        shader.setVec3("light.direction", cameraObject.Transform.Forward);
+        shader.setVec3("spotLight.position", cameraObject.Transform.Position);
+        shader.setVec3("spotLight.direction", cameraObject.Transform.Forward);
         shader.setVec3("viewPos", cameraObject.Transform.Position);
 
-        mesh.Draw(shader);
-
-        secondMesh.Draw(lightShader);
+       
         
         for (std::unique_ptr<Mesh*>& m : meshes)
         {
@@ -238,6 +294,11 @@ int main ()
             meshPointer->Draw(shader);
             
         }
+        
+        meshOne.Draw(lightShader);
+        meshTwo.Draw(lightShader);
+        meshThree.Draw(lightShader);
+        meshFour.Draw(lightShader);
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();
