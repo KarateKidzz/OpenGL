@@ -158,20 +158,10 @@ int main ()
     meshOne.Textures.push_back(diffuse);
     meshOne.Textures.push_back(spec);
     
-    Mesh meshTwo(v,i);
+    Mesh meshTwo(meshOne);
+    Mesh meshThree(meshOne);
+    Mesh meshFour(meshOne);
     
-    meshTwo.Textures.push_back(diffuse);
-    meshTwo.Textures.push_back(spec);
-    
-    Mesh meshThree(v,i);
-    
-    meshThree.Textures.push_back(diffuse);
-    meshThree.Textures.push_back(spec);
-    
-    Mesh meshFour(v,i);
-    
-    meshFour.Textures.push_back(diffuse);
-    meshFour.Textures.push_back(spec);
     
     lightOne.AttachComponent(&meshOne);
     lightTwo.AttachComponent(&meshTwo);
