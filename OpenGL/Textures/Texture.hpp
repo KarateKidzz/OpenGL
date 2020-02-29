@@ -13,10 +13,11 @@
 
 
 #include <glad/glad.h>
+#include "../Utilities/Loader.h"
 
 
 
-class Texture
+class Texture : public Loader
 {
 public:
     Texture(const char* file);
@@ -24,7 +25,6 @@ public:
     const bool Successful () const;
     
 private:
-    bool success;
     GLuint ID;
     int width, height, numChannels;
 };

@@ -10,7 +10,8 @@
 
 #include "stb_image.h"
 
-Texture::Texture(const char *file) {
+Texture::Texture(const char *file)
+{
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
     
@@ -34,6 +35,7 @@ Texture::Texture(const char *file) {
     }
     else
     {
+        errorMessage = "Failed to load texture data";
         success = false;
     }
     
