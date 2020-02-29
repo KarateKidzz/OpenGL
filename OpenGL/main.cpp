@@ -12,6 +12,7 @@
 #include "Application/Input.hpp"
 #include "Camera/Camera.hpp"
 #include "Rendering/Mesh.hpp"
+#include "Rendering/Model.hpp"
 #include "Textures/Texture.hpp"
 #include "Components/DebugInput.hpp"
 
@@ -132,6 +133,24 @@ int main ()
     if (!specularTexture.Successful())
     {
         std::cerr << "Failed to load texture" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
+    
+    std::string ModelPath("Resources/nanosuit/nanosuit.obj");
+    
+    Model NanoSuitModel(ModelPath);
+    
+    WorldObject ModelObject;
+    
+    for (Component& C : NanoSuitModel.meshes)
+    {
+        ModelObject.AttachComponent(&C);
+    }
+    
+    if (!NanoSuitModel.Successful)
+    {
+        std::cerr << NanoSuitModel.ErrorMessage << std::endl;
         glfwTerminate();
         return EXIT_FAILURE;
     }
@@ -289,6 +308,8 @@ int main ()
         meshTwo.Draw(lightShader);
         meshThree.Draw(lightShader);
         meshFour.Draw(lightShader);
+        
+        NanoSuitModel.Draw(shader);
         
         openGLLoader.Display.Render();
         openGLLoader.Display.Update();

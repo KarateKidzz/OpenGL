@@ -27,10 +27,11 @@ class Model : public Loader
 public:
     Model (std::string& path);
     void Draw(Shader& shader);
+
+    std::vector<Mesh> meshes;
     
 private:
     
-    std::vector<Mesh> meshes;
     std::string directory;
     
     void LoadModel(std::string& path);

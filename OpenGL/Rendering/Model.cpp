@@ -38,6 +38,8 @@ void Model::LoadModel(std::string &path) {
     directory = path.substr(0, path.find_last_of('/'));
     
     ProcessNode(scene->mRootNode, scene);
+    
+    success = true;
 }
 
 void Model::ProcessNode(aiNode *node, const aiScene *scene)
