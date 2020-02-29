@@ -33,7 +33,7 @@ protected:
     class WorldObject* worldObject;
     
 private:
-    /// Sets this component's WorldObject. Automatically calls Start()
+    /// Sets this component's WorldObject. Automatically calls Start(). Call from WorlObject : Do Not Call From This Class
     void AssignWorldObject (WorldObject* worldObject);
     
 };
