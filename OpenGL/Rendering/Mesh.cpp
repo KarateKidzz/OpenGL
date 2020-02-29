@@ -18,6 +18,14 @@ Indices(indicies)
     SetupMesh();
 }
 
+Mesh::Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies, std::vector<MeshTexture> &textures) :
+Verticies(verticies),
+Indices(indicies),
+Textures(textures)
+{
+    SetupMesh();
+}
+
 Mesh::~Mesh()
 {
     glDeleteVertexArrays(1, &VAO);
@@ -75,7 +83,7 @@ void Mesh::SetupMesh() {
     glBindVertexArray(0);
 }
 
-void Mesh::Draw(const Shader &shader)
+void Mesh::Draw(const Shader &shader) const
 {
     shader.Select();
     
@@ -102,3 +110,6 @@ void Mesh::Draw(const Shader &shader)
     
     shader.Deselect();
 }
+
+
+

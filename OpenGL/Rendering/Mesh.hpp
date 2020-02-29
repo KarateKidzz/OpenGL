@@ -26,6 +26,7 @@ struct MeshTexture
 {
     unsigned int TextureUnit;
     unsigned int TextureID;
+    std::string TextureType;
     
     MeshTexture(unsigned int textureUnit, unsigned int textureID)
     {
@@ -39,13 +40,14 @@ class Mesh : public Component
 {
 public:
     Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies);
+    Mesh(std::vector<Vertex> &verticies, std::vector<unsigned int> &indicies, std::vector<MeshTexture>& textures);
     ~Mesh();
     
     std::vector<Vertex> Verticies;
     std::vector<unsigned int> Indices;
     std::vector<MeshTexture> Textures;
     
-    void Draw (const Shader& shader);
+    void Draw (const Shader& shader) const;
     
 private:
     unsigned int VAO, VBO, EBO;
